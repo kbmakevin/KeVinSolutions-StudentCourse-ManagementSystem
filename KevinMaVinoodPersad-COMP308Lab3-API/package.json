@@ -1,0 +1,17 @@
+{
+  "name": "KevinMaVinoodPersad-COMP308Lab3-API",
+  "version": "1.0.0",
+  "description": "This is an Express Rest API which exposes CRUD functionalities for a student/course system.",
+  "main": "server.js",
+  "author": "Kevin Ma, Vinood Persad",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.3",
+    "mongoose": "^5.0.11"
+  },
+  "devDependencies": {
+    "@types/express": "^4.11.1",
+    "@types/mongoose": "^5.0.7",
+    "@types/node": "^9.4.7"
+  }
+}
