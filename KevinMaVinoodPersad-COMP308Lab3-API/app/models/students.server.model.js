@@ -19,7 +19,15 @@ let studentsSchema = mongoose.Schema({
     city: String,
     phoneNumber: String,
     email: String,
-    program: String
+    program: String,
+    // 2018.03.21 - 11:32:21 - "Use ref to allow a student document to make references to corresponding course documents"
+    // We need to use array of dbref here since student can enroll in many courses
+    courses: [
+        {
+            type: mongoose.Schema.ObjectId,
+            ref: 'Courses'
+        }
+    ]
 });
 
-module.exports = mongoose.model('students', studentsSchema);
+module.exports = mongoose.model('Students', studentsSchema);

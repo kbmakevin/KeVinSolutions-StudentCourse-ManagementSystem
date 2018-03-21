@@ -17,4 +17,4 @@ let coursesSchema = mongoose.Schema({
     semester: Number
 });
 
-module.exports = mongoose.model('courses', coursesSchema);
+module.exports = mongoose.model('Courses', coursesSchema);

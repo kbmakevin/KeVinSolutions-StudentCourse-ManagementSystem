@@ -19,6 +19,7 @@ const bodyParser = require('body-parser');
 // const config = require('./config');
 
 // define the routes
+const studentRoutes = require('../app/routes/students.server.routes');
 
 // create a new express app
 const app = express();
@@ -27,6 +28,8 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+// load the routing files
+app.use('/api/students', studentRoutes);
 
 // export the express application instance
 module.exports = app;

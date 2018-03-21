@@ -1,0 +1,104 @@
+<h1>New Student</h1>
+<form (ngSubmit)="create()">
+  <!-- Student Number -->
+  <div class="form-group row">
+    <div class="col-4 text-right">
+      <label>Student Number:</label>
+    </div>
+    <div class="col-md-5">
+      <input type="number" class="form-control" required [(ngModel)]="student.studentNumber" name="studentNumber" placeholder="300123456">
+    </div>
+  </div>
+
+  <!-- Password -->
+  <div class="form-group row">
+    <div class="col-4 text-right">
+      <label>Password:</label>
+    </div>
+    <div class="col-md-5">
+      <input type="password" class="form-control" placeholder="password" required [(ngModel)]="student.password" value="password"
+      />
+    </div>
+  </div>
+
+  <!-- First Name -->
+  <div class="form-group row">
+    <div class="col-4 text-right">
+      <label>First Name:</label>
+    </div>
+    <div class="col-md-5">
+      <input type="text" class="form-control" placeholder="John" required [(ngModel)]="student.firstName" value="John" />
+    </div>
+  </div>
+
+  <!-- Last Name -->
+  <div class="form-group row">
+    <div class="col-4 text-right">
+      <label>Last Name:</label>
+    </div>
+    <div class="col-md-5">
+      <input type="text" class="form-control" placeholder="Doe" required [(ngModel)]="student.lastName" value="Doe" />
+    </div>
+  </div>
+
+  <!-- Address -->
+  <div class="form-group row">
+    <div class="col-4 text-right">
+      <label>Address:</label>
+    </div>
+    <div class="col-md-5">
+      <input type="text" class="form-control" placeholder="123 Example Street" required [(ngModel)]="student.address" value="123 Example Street"
+      />
+    </div>
+  </div>
+
+  <!-- City -->
+  <div class="form-group row">
+    <div class="col-4 text-right">
+      <label>City:</label>
+    </div>
+    <div class="col-md-5">
+      <input type="text" class="form-control" placeholder="Toronto" required [(ngModel)]="student.city" value="Toronto" />
+    </div>
+  </div>
+
+  <!-- Phone Number -->
+  <div class="form-group row">
+    <div class="col-4 text-right">
+      <label>Phone Number:</label>
+    </div>
+    <div class="col-md-5">
+      <input type="text" class="form-control" placeholder="416-123-4456" required [(ngModel)]="student.phoneNumber" value="416-123-4456"
+      />
+    </div>
+  </div>
+
+  <!-- Email -->
+  <div class="form-group row">
+    <div class="col-4 text-right">
+      <label>Email:</label>
+    </div>
+    <div class="col-md-5">
+      <input type="email" class="form-control" placeholder="jdoe@example.com" required [(ngModel)]="student.email" value="jdoe@example.com"
+      />
+    </div>
+  </div>
+
+  <!-- Program -->
+  <div class="form-group row">
+    <div class="col-4 text-right">
+      <label>Program of Study:</label>
+    </div>
+    <div class="col-md-5">
+      <input type="text" class="form-control" placeholder="Software Engineering Technology" required [(ngModel)]="student.program">
+    </div>
+  </div>
+
+  <!-- Buttons -->
+  <button type="submit" class="btn btn-outline-success">
+    <i class="fa fa-check-square-o"></i> Create</button>
+  <a href="/surveys" class="btn btn-outline-warning">
+    <i class="fa fa-undo"> Cancel</i>
+  </a>
+
+</form>
