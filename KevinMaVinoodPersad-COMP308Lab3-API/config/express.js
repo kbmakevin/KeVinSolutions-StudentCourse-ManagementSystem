@@ -11,19 +11,21 @@
 
 // built-in node modules
 
-// built-in node modules
-const express = require('express');
-
 // installed node modules
+const express = require('express');
+const bodyParser = require('body-parser');
 
 // custom modules
 // const config = require('./config');
 
 // define the routes
 
-
 // create a new express app
 const app = express();
+
+// configure the session middleware ------------------------------------------------------------------------------------------
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 
 // export the express application instance
