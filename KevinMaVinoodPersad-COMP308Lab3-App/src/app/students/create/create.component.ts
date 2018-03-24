@@ -21,13 +21,33 @@ interface Student {
 })
 export class CreateComponent {
 
-  student: Student;
+  student: Student = {
+
+    studentNumber: 300123456,
+    password: 'password',
+    firstName: 'John',
+    lastName: 'Doe',
+    address: '123 Example Street',
+    city: 'Toronto',
+    phoneNumber: '416-123-4456',
+    email: 'jdoe@example.com',
+    program: 'Software Engineering Technology'
+
+  };
+  studentNumber: Number = 52;
   errorMessage: string;
 
   constructor(private _router: Router,
     private _studentsService: StudentsService) { }
 
   create() {
+
+    console.log(`inside create component: 
+    my student is: ${this.student}
+    `);
+
+    console.log(`number is : ${this.studentNumber}`);
+
     this._studentsService
       .create(this.student)
       .subscribe(createdStudent =>

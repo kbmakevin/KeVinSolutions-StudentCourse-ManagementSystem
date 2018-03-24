@@ -6,7 +6,7 @@
       <label>Student Number:</label>
     </div>
     <div class="col-md-5">
-      <input type="number" class="form-control" required [(ngModel)]="student.studentNumber" name="studentNumber" placeholder="300123456">
+      <input type="number" class="form-control" required [(ngModel)]="student.studentNumber" name="studentNumber">
     </div>
   </div>
 
@@ -16,7 +16,7 @@
       <label>Password:</label>
     </div>
     <div class="col-md-5">
-      <input type="password" class="form-control" placeholder="password" required [(ngModel)]="student.password" value="password"
+      <input type="password" class="form-control" placeholder="{{student.password}}" required [(ngModel)]="student.password" name="password"
       />
     </div>
   </div>
@@ -27,7 +27,7 @@
       <label>First Name:</label>
     </div>
     <div class="col-md-5">
-      <input type="text" class="form-control" placeholder="John" required [(ngModel)]="student.firstName" value="John" />
+      <input type="text" class="form-control" required [(ngModel)]="student.firstName" name="firstName" />
     </div>
   </div>
 
@@ -37,7 +37,7 @@
       <label>Last Name:</label>
     </div>
     <div class="col-md-5">
-      <input type="text" class="form-control" placeholder="Doe" required [(ngModel)]="student.lastName" value="Doe" />
+      <input type="text" class="form-control" required [(ngModel)]="student.lastName" name="lastName" />
     </div>
   </div>
 
@@ -47,8 +47,7 @@
       <label>Address:</label>
     </div>
     <div class="col-md-5">
-      <input type="text" class="form-control" placeholder="123 Example Street" required [(ngModel)]="student.address" value="123 Example Street"
-      />
+      <input type="text" class="form-control" required [(ngModel)]="student.address" name="address" />
     </div>
   </div>
 
@@ -58,7 +57,7 @@
       <label>City:</label>
     </div>
     <div class="col-md-5">
-      <input type="text" class="form-control" placeholder="Toronto" required [(ngModel)]="student.city" value="Toronto" />
+      <input type="text" class="form-control" required [(ngModel)]="student.city" name="city" />
     </div>
   </div>
 
@@ -68,8 +67,7 @@
       <label>Phone Number:</label>
     </div>
     <div class="col-md-5">
-      <input type="text" class="form-control" placeholder="416-123-4456" required [(ngModel)]="student.phoneNumber" value="416-123-4456"
-      />
+      <input type="text" class="form-control" required [(ngModel)]="student.phoneNumber" name="phoneNumber" />
     </div>
   </div>
 
@@ -79,8 +77,7 @@
       <label>Email:</label>
     </div>
     <div class="col-md-5">
-      <input type="email" class="form-control" placeholder="jdoe@example.com" required [(ngModel)]="student.email" value="jdoe@example.com"
-      />
+      <input type="email" class="form-control" required [(ngModel)]="student.email" name="email" />
     </div>
   </div>
 
@@ -90,7 +87,7 @@
       <label>Program of Study:</label>
     </div>
     <div class="col-md-5">
-      <input type="text" class="form-control" placeholder="Software Engineering Technology" required [(ngModel)]="student.program">
+      <input type="text" class="form-control" required [(ngModel)]="student.program" name="program">
     </div>
   </div>
 
