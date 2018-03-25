@@ -1,4 +1,19 @@
+
+import { Router } from '@angular/router';
+import { StudentsService } from '../students.service';
 import { Component, OnInit } from '@angular/core';
+
+interface Student {
+  studentNumber: Number;
+  password: String;
+  firstName: String;
+  lastName: String;
+  address: String;
+  city: String;
+  phoneNumber: String;
+  email: String;
+  program: String;
+}
 
 @Component({
   selector: 'app-list',
@@ -7,9 +22,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListComponent implements OnInit {
 
-  constructor() { }
+
+  private students: Student[] = [];
+  errorMessage: string;
+
+  constructor(private _router: Router,
+    private _studentsService: StudentsService) {
+        
+     }
 
   ngOnInit() {
+    this._studentsService.listStudents()
+    .subscribe((student) => {
+      this.students.push(student);
+      });
+
+    console.log(this.students);
   }
 
 }

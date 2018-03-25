@@ -19,5 +19,9 @@ router.post('/', (req, res, next) => {
     studentsController.Create(req, res, next);
 });
 
+router.get('/', (req, res, next) => {
+    studentsController.GetStudents(req, res, next);
+});
+
 
 module.exports = router;

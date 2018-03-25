@@ -29,6 +29,17 @@ module.exports.Create = function (req, res, next) {
     })
 }
 
+module.exports.GetStudents = function(req, res, next) {
+
+    Student.find((err, students) => {
+        if (err) {
+            return console.error(err);
+        } else {
+            res.status(200).json(students);
+        }
+    });
+}
+
 // enroll in a course
 
 // HELPER FUNCTIONS ===========================================================

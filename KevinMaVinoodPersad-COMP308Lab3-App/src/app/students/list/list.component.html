@@ -1,3 +1,23 @@
-<p>
-  list works!
-</p>
+<div style="margin-top:15px">
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Student #</th>
+        <th scope="col">First Name</th>
+        <th scope="col">Last Name</th>
+        <th scope="col">Program</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let student of students">
+        <th scope="row">{{ student.studentNumber }}</th>
+        <td>{{ student.firstName }}</td>
+        <td>{{ student.lastName }}</td>
+        <td>{{ student.program }}</td>
+        <td><a href="#" class="btn btn-primary pull-right" style="background-color:white;color:black; border-color: black">Details</a></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
