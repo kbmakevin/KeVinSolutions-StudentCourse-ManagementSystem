@@ -1,7 +1,7 @@
 
 import { Router } from '@angular/router';
 import { StudentsService } from '../students.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 interface Student {
   studentNumber: Number;
@@ -22,8 +22,7 @@ interface Student {
 })
 export class ListComponent implements OnInit {
 
-
-  private students: Student[] = [];
+  student: Student;
   errorMessage: string;
 
   constructor(private _router: Router,
@@ -34,10 +33,9 @@ export class ListComponent implements OnInit {
   ngOnInit() {
     this._studentsService.listStudents()
     .subscribe((student) => {
-      this.students.push(student);
+      this.student = student;
+      console.log(student);
       });
-
-    console.log(this.students);
   }
 
 }

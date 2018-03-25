@@ -10,11 +10,11 @@
       </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let student of students">
-        <th scope="row">{{ student.studentNumber }}</th>
-        <td>{{ student.firstName }}</td>
-        <td>{{ student.lastName }}</td>
-        <td>{{ student.program }}</td>
+        <tr *ngFor="let stud of student">
+        <th scope="row">{{ stud.studentNumber }}</th>
+        <td>{{ stud.firstName }}</td>
+        <td>{{ stud.lastName }}</td>
+        <td>{{ stud.program }}</td>
         <td><a href="#" class="btn btn-primary pull-right" style="background-color:white;color:black; border-color: black">Details</a></td>
       </tr>
     </tbody>
