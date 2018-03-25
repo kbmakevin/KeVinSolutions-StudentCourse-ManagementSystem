@@ -25,6 +25,13 @@ export class StudentsService {
       .catch(this.handleError);
   }
 
+  getStudent(id: any): Observable<any> {
+    return this._http
+    .get(this._baseURL + '/' + id)
+    .map((res: Response) =>   res.json())
+    .catch(this.handleError);
+  }
+
   private handleError(error: Response) {
     return Observable.throw(error.json().message || 'Server error');
   }

@@ -1,0 +1,55 @@
+<div style="margin-top:20px">
+    <h4>Student Details</h4>
+    <div class="row justify-content-center">
+        <div class="col-md-7">
+                <hr />
+                <table class="table table-striped" align="center" >
+                        <tbody *ngFor="let stud of student" class="text-left">
+                            <tr>
+                                <td><b>First Name</b>: {{ stud.firstName }}</td>
+                                <td style="padding-left: 40px"><b>Last Name</b>: {{ stud.lastName }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Address</b>: {{ stud.address }}</td>
+                                <td style="padding-left: 40px"><b>City</b>: {{ stud.city }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Phone Number</b>: {{ stud.phoneNumber }}</td>
+                                <td style="padding-left: 40px"><b>Email</b>: {{ stud.email }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Student Number</b>: {{ stud.studentNumber }}</td>
+                                <td style="padding-left: 40px"><b>Program</b>: {{ stud.program }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+        </div>
+        
+        <div class="col-md-9" style="margin-top:15px" >
+                <h4>Courses</h4><hr />
+        <table class="table">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col">Code</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Section</th>
+                    <th scope="col">Semester</th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let course of courses">
+                        <th scope="row">{{ course.courseCode }}</th>
+                        <td>{{ course.courseName }}</td>
+                        <td>{{ course.section }}</td>
+                        <td>{{ course.semester }}</td>
+                        <td>
+                            <!-- these edit button would call a EditCourse Component, and the drop course can just call the api and remove from database.-->
+                            <a [routerLink]="[]" class="btn btn-success" style="background-color:white;color:green;">Edit</a>
+                            <a [routerLink]="[]" class="btn btn-danger pull-right" style="background-color:white;color:red;">Drop</a>
+                        </td>
+                  </tr>
+                </tbody>
+              </table>
+              </div>
+    </div>

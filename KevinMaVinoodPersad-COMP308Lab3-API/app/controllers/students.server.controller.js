@@ -40,19 +40,32 @@ module.exports.GetStudents = function(req, res, next) {
     });
 }
 
+module.exports.GetStudentDetails = function(req, res, next) {
+    let studentNum = req.params.id;
+    console.log("inside controller " + studentNum);
+    Student.find({studentNumber:studentNum}, (err, student) => {
+        if (err) {
+            return console.error(err);
+        } else {
+            console.log(student);
+            res.status(200).json(student);
+        }
+    });
+}
+
 // enroll in a course
 
 // HELPER FUNCTIONS ===========================================================
-// function getErrorMessage(err) {
-//     if (err.errors) {
-//         for (let errName in err.errors) {
-//             if (err.errors[errName].message) return err.errors[errName].
-//                 message;
-//         }
-//     } else {
-//         return 'Unknown server error';
-//     }
-// };
+ function getErrorMessage(err) {
+     if (err.errors) {
+         for (let errName in err.errors) {
+             if (err.errors[errName].message) return err.errors[errName].
+                 message;
+         }
+     } else {
+         return 'Unknown server error';
+     }
+ };
 
 
 

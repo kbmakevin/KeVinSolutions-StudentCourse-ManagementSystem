@@ -23,5 +23,9 @@ router.get('/', (req, res, next) => {
     studentsController.GetStudents(req, res, next);
 });
 
+router.get('/:id', (req, res, next) => {
+    studentsController.GetStudentDetails(req, res, next);
+})
+
 
 module.exports = router;
