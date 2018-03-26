@@ -20,6 +20,7 @@ const bodyParser = require('body-parser');
 
 // define the routes
 const studentRoutes = require('../app/routes/students.server.routes');
+const courseRoutes = require('../app/routes/courses.server.routes');
 
 // create a new express app
 const app = express();
@@ -30,6 +31,7 @@ app.use(bodyParser.json());
 
 // load the routing files
 app.use('/api/students', studentRoutes);
+app.use('/api/courses', courseRoutes);
 
 // export the express application instance
 module.exports = app;

@@ -14,7 +14,13 @@ let coursesSchema = mongoose.Schema({
     courseCode: String,
     courseName: String,
     section: Number,
-    semester: Number
+    semester: Number,
+    students: [
+        {
+            type: mongoose.Schema.ObjectId,
+            ref: 'Students'
+        }
+    ]
 });
 
 module.exports = mongoose.model('Courses', coursesSchema);
