@@ -10,6 +10,7 @@ const mongoose = require('mongoose');
 
 // student object created from the Schema / model
 const Student = require('../models/students.server.model');
+const Course = require('../models/courses.server.model');
 
 // STUDENT CRUD FUNCTIONS =======================================================
 // add student
@@ -33,7 +34,9 @@ module.exports.GetStudents = function(req, res, next) {
 
     Student.find((err, students) => {
         if (err) {
-            return console.error(err);
+            return res.status(400).send({
+                message: getErrorMessage(err)
+            });
         } else {
             res.status(200).json(students);
         }
@@ -45,12 +48,44 @@ module.exports.GetStudentDetails = function(req, res, next) {
     console.log("inside controller " + studentNum);
     Student.find({studentNumber:studentNum}, (err, student) => {
         if (err) {
-            return console.error(err);
+            return res.status(400).send({
+                message: getErrorMessage(err)
+            });
         } else {
             console.log(student);
             res.status(200).json(student);
         }
     });
+}
+
+module.exports.AddCourse = function(req, res, next) {
+    // My assumption here is that we will get the student number and course code and
+    // add the course to the student by finding both from database. Not sure if this is how its done.
+
+    let courseCode = req.body.code;
+    let studentId = req.body.studentId;
+    let student = new Student();
+    let course = new Course();
+
+    Student.find({studentNumber:studentId}, (err, s) => {
+        if(err) {
+            return res.status(400).send({
+                message: getErrorMessage(err)
+            });
+        } else {
+            student = s;
+        }
+    })
+
+    Course.find({courseCode:courseCode}, (err, c) => {
+        if(err) {
+            return res.status(400).send({
+                message: getErrorMessage(err)
+            });
+        } else {
+            course = c;
+        }
+    })
 }
 
 // enroll in a course

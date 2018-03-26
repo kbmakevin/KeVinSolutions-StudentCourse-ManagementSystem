@@ -27,5 +27,9 @@ router.get('/:id', (req, res, next) => {
     studentsController.GetStudentDetails(req, res, next);
 })
 
+router.post('/addcourse', (req, res, next) => {
+    studentsController.AddCourse(req, res, next);
+})
+
 
 module.exports = router;
