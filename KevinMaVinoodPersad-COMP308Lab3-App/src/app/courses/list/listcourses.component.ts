@@ -18,6 +18,7 @@ interface Course {
 export class ListCoursesComponent implements OnInit {
 
   course: Course;
+  errorMessage: String;
 
   constructor(private _router: Router,
     private _coursesService: CoursesService) {
@@ -30,6 +31,12 @@ export class ListCoursesComponent implements OnInit {
       this.course = course;
       console.log(course);
       });
+  }
+
+  deleteCourse(code: String) {
+    this._coursesService.deleteCourse(code)
+    .subscribe(c => this.ngOnInit(),
+      error => this.errorMessage = error);
   }
 
 }

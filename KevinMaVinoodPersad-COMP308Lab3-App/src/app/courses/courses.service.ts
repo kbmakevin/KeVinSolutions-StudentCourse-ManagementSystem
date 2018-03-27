@@ -20,6 +20,20 @@ export class CoursesService {
             .catch(this.handleError);
     }
 
+    createCourses(course: any): Observable<any> {
+        return this._http
+        .post(this._courseBaseURL, course)
+        .map((res: Response) => res.json())
+        .catch(this.handleError);
+    }
+
+    deleteCourse(code: any): Observable<any> {
+        return this._http
+        .get(this._courseBaseURL + '/delete/' + code)
+        .map((res: Response) =>res.json())
+        .catch(this.handleError);
+    }
+
     private handleError(error: Response) {
         return Observable.throw(error.json().message || 'Server error');
       }

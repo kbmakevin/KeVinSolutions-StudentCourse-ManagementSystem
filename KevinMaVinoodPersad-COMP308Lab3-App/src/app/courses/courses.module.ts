@@ -5,15 +5,17 @@ import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 import { CoursesComponent } from './courses.component';
 import { ListCoursesComponent } from './list/listcourses.component';
+import { CreateCourseComponent } from './create/createcourse.component';
 import { CoursesService } from './courses.service';
 
 
-const studentRoutes: Routes = [
+const coursesRoutes: Routes = [
     {
       path: 'courses',
       component: CoursesComponent,
       children: [
         { path: '', component: ListCoursesComponent },
+        { path: 'create', component: CreateCourseComponent }
       ]
     }
   
@@ -23,9 +25,9 @@ const studentRoutes: Routes = [
     imports: [
       CommonModule,
       FormsModule,
-      RouterModule.forChild(studentRoutes),
+      RouterModule.forChild(coursesRoutes),
     ],
-    declarations: [CoursesComponent, ListCoursesComponent],
+    declarations: [CoursesComponent, ListCoursesComponent, CreateCourseComponent],
     providers: [CoursesService]
   })
   export class CoursesModule { }

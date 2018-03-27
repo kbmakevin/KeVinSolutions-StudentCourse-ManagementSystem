@@ -27,8 +27,6 @@ module.exports.GetCourse = function(req, res, next) {
     });
 }
 
-
-
 // add course
 module.exports.CreateCourse = function (req, res, next) {
     let course = Course(req.body);
@@ -44,6 +42,19 @@ module.exports.CreateCourse = function (req, res, next) {
             res.status(200).json(course);
         }
     })
+}
+
+ module.exports.DeleteCourse = function (req, res, next) {
+     let code = req.params.code;
+
+     Course.remove({ courseCode: code }, (err) => {
+         if (err) {
+             console.error(err);
+             res.end(err);
+         } else {
+             res.status(200).json(code);
+         }
+     });
 }
 
 function getErrorMessage(err) {

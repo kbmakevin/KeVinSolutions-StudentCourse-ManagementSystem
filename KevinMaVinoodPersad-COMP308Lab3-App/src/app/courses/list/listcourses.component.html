@@ -1,7 +1,7 @@
-
 <div style="padding-top:25px; padding-bottom:45px" >
-    <a [routerLink]="[]" class="btn btn-success pull-left ">Create Course</a>
+    <a [routerLink]="['create']" class="btn btn-success pull-left ">Create Course</a>
 </div>
+
 <div style="margin-top:15px">
     <table class="table">
       <thead class="thead-dark">
@@ -20,7 +20,7 @@
           <td>{{ c.section }}</td>
           <td>{{ c.semester }}</td>
           <td>
-            <a [routerLink]="[]" [queryParams]="{id: c.courseCode}" class="btn btn-danger pull-right" style="background-color:white;color:red; ">Delete</a></td>
+            <a (click)="deleteCourse(c.courseCode)" class="btn btn-danger pull-right" style="background-color:white;color:red; ">Delete</a></td>
         </tr>
       </tbody>
     </table>

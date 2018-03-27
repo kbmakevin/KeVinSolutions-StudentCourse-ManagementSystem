@@ -24,5 +24,9 @@ router.get('/', (req, res, next) => {
     coursesController.GetCourse(req, res, next);
 });
 
+router.get('/delete/:code', (req, res, next) => {
+    coursesController.DeleteCourse(req, res, next);
+});
+
 
 module.exports = router;
