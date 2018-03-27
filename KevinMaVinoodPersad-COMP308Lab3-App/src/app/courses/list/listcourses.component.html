@@ -1,6 +1,6 @@
 
 <div style="padding-top:25px; padding-bottom:45px" >
-    <a [routerLink]="[]" class="btn btn-success pull-left" style="background-color:white;color:green; ">Create Course</a>
+    <a [routerLink]="[]" class="btn btn-success pull-left ">Create Course</a>
 </div>
 <div style="margin-top:15px">
     <table class="table">
@@ -14,20 +14,13 @@
         </tr>
       </thead>
       <tbody>
-            <tr>
-                    <th scope="row">COMP 308</th>
-                    <td>Emerging Technologies</td>
-                    <td>002</td>
-                    <td>3</td>
-
-
-          <!-- <tr *ngFor="let stud of student">
-          <th scope="row">COMP 308</th>
-          <td>Emerging Technologies</td>
-          <td>002</td>
-          <td>3</td>-->
+          <tr *ngFor="let c of course">
+          <th scope="row">{{ c.courseCode }}</th>
+          <td>{{ c.courseName }}</td>
+          <td>{{ c.section }}</td>
+          <td>{{ c.semester }}</td>
           <td>
-            <a [routerLink]="[]" [queryParams]="{id: stud.studentNumber}" class="btn btn-danger pull-right" style="background-color:white;color:red; ">Delete</a></td>
+            <a [routerLink]="[]" [queryParams]="{id: c.courseCode}" class="btn btn-danger pull-right" style="background-color:white;color:red; ">Delete</a></td>
         </tr>
       </tbody>
     </table>

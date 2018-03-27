@@ -20,5 +20,9 @@ router.post('/', (req, res, next) => {
     coursesController.CreateCourse(req, res, next);
 });
 
+router.get('/', (req, res, next) => {
+    coursesController.GetCourse(req, res, next);
+});
+
 
 module.exports = router;

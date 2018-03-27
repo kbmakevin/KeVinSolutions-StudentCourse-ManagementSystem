@@ -12,8 +12,24 @@ const mongoose = require('mongoose');
 const Student = require('../models/students.server.model');
 const Course = require('../models/courses.server.model');
 
-// STUDENT CRUD FUNCTIONS =======================================================
-// add student
+// Course CRUD FUNCTIONS =======================================================
+
+// Get list of courses
+module.exports.GetCourse = function(req, res, next) {
+    Course.find((err, courses) => {
+        if (err) {
+            return res.status(400).send({
+                message: getErrorMessage(err)
+            });
+        } else {
+            res.status(200).json(courses);
+        }
+    });
+}
+
+
+
+// add course
 module.exports.CreateCourse = function (req, res, next) {
     let course = Course(req.body);
     console.log('somebody is trying to add a course now!');
