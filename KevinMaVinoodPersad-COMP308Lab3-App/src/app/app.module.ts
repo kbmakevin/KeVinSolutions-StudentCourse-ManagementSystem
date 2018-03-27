@@ -3,10 +3,10 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HttpModule } from '@angular/http';
 import { StudentsModule } from './students/students.module';
+import { CoursesModule } from './courses/courses.module';
 
 import { AppComponent } from './app.component';
 import { HomeModule } from './home/home.module';
-import { CoursesComponent } from './courses/courses.component';
 
 const appRoutes: Routes = [
   {
@@ -17,7 +17,7 @@ const appRoutes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    CoursesComponent
+    
   ],
   imports: [
     BrowserModule,
@@ -25,6 +25,7 @@ const appRoutes: Routes = [
     HttpModule,
     HomeModule,
     StudentsModule,
+    CoursesModule
   ],
   providers: [],
   bootstrap: [AppComponent]

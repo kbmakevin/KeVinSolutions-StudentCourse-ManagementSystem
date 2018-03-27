@@ -19,6 +19,7 @@ const studentRoutes: Routes = [
       { path: 'details', component: DetailsComponent },
     ],
   }
+
 ];
 
 @NgModule({
