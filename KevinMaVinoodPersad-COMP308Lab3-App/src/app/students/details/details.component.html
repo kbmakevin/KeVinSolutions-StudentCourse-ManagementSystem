@@ -4,30 +4,30 @@
         <div class="col-md-7">
                 <hr />
                 <table class="table table-striped" align="center" >
-                        <tbody *ngFor="let stud of student" class="text-left">
+                        <tbody  class="text-left">
                             <tr>
-                                <td><b>First Name</b>: {{ stud.firstName }}</td>
-                                <td style="padding-left: 40px"><b>Last Name</b>: {{ stud.lastName }}</td>
+                                <td><b>First Name</b>: {{ student.firstName }}</td>
+                                <td style="padding-left: 40px"><b>Last Name</b>: {{ student.lastName }}</td>
                             </tr>
                             <tr>
-                                <td><b>Address</b>: {{ stud.address }}</td>
-                                <td style="padding-left: 40px"><b>City</b>: {{ stud.city }}</td>
+                                <td><b>Address</b>: {{ student.address }}</td>
+                                <td style="padding-left: 40px"><b>City</b>: {{ student.city }}</td>
                             </tr>
                             <tr>
-                                <td><b>Phone Number</b>: {{ stud.phoneNumber }}</td>
-                                <td style="padding-left: 40px"><b>Email</b>: {{ stud.email }}</td>
+                                <td><b>Phone Number</b>: {{ student.phoneNumber }}</td>
+                                <td style="padding-left: 40px"><b>Email</b>: {{ student.email }}</td>
                             </tr>
                             <tr>
-                                <td><b>Student Number</b>: {{ stud.studentNumber }}</td>
-                                <td style="padding-left: 40px"><b>Program</b>: {{ stud.program }}</td>
+                                <td><b>Student Number</b>: {{ student.studentNumber }}</td>
+                                <td style="padding-left: 40px"><b>Program</b>: {{ student.program }}</td>
                             </tr>
                         </tbody>
                     </table>
         </div>
         
-        <div class="col-md-9" style="margin-top:15px" >
+       <!-- <div class="col-md-9" style="margin-top:15px" >
                 <h4>Courses</h4><hr />
-        <table class="table">
+       <table class="table">
                 <thead class="thead-light">
                   <tr>
                     <th scope="col">Code</th>
@@ -38,18 +38,17 @@
                   </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let course of courses">
-                        <th scope="row">{{ course.courseCode }}</th>
-                        <td>{{ course.courseName }}</td>
-                        <td>{{ course.section }}</td>
-                        <td>{{ course.semester }}</td>
+                    <tr *ngFor="let c of student['courses']">
+                        <th scope="row">{{ c.courseCode }}</th>
+                        <td>{{ c.courseName }}</td>
+                        <td>{{ c.section }}</td>
+                        <td>{{ c.semester }}</td>
                         <td>
-                            <!-- these edit button would call a EditCourse Component, and the drop course can just call the api and remove from database.-->
                             <a [routerLink]="[]" class="btn btn-success" style="background-color:white;color:green;">Edit</a>
                             <a [routerLink]="[]" class="btn btn-danger pull-right" style="background-color:white;color:red;">Drop</a>
                         </td>
                   </tr>
                 </tbody>
               </table>
-              </div>
+              </div>-->
     </div>

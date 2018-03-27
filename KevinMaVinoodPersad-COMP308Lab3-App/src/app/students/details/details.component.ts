@@ -14,6 +14,7 @@ interface Student {
     phoneNumber: String;
     email: String;
     program: String;
+    courses: Course[];
   }
 
   interface Course {
@@ -35,21 +36,8 @@ interface Student {
     errorMessage: string;
     NoEdit: Boolean = true;
 
-    course: Course = {
-        courseCode: "COMP 308",
-        courseName: "Emergin Tech",
-        section: 2,
-        semester:4
-    }
-
-    course2: Course = {
-        courseCode: "COMP 231",
-        courseName: "Java EE",
-        section: 3,
-        semester:3
-    }
-
-    courses: Course[] = [this.course, this.course2];
+    course: Course;
+    courses: Course[];
 
     constructor(private _route: ActivatedRoute, private _studentsService: StudentsService) {
             this._route.queryParams.subscribe(params => this.studentNum = params['id']);
@@ -62,9 +50,10 @@ interface Student {
         this._studentsService
         .getStudent(s)
         .subscribe((res) => {
-            this.student = res
-            console.log(this.student);
+            this.student = res;
         });
+
+        console.log(this.student);
     }
 
     editStudentCourse() {

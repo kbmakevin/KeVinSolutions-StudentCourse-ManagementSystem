@@ -31,5 +31,8 @@ router.post('/registercourse', (req, res, next) => {
     studentsController.RegisterCourse(req, res, next);
 })
 
+router.post('/removecourse', (req, res, next) => {
+    studentsController.RemoveCourseFromStudent(req, res, next);
+})
 
 module.exports = router;

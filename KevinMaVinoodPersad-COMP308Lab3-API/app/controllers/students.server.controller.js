@@ -46,16 +46,29 @@ module.exports.GetStudents = function(req, res, next) {
 module.exports.GetStudentDetails = function(req, res, next) {
     let studentNum = req.params.id;
     console.log("inside controller " + studentNum);
-    Student.find({studentNumber:studentNum}, (err, student) => {
-        if (err) {
-            return res.status(400).send({
-                message: getErrorMessage(err)
-            });
-        } else {
-            console.log(student);
-            res.status(200).json(student);
+
+    Student.findOne({studentNumber:studentNum})
+    .populate('courses')
+    .exec((err, student) => {
+        res.json(student);
+    })
+}
+
+module.exports.RemoveCourseFromStudent = function(req, res, next) {
+    let id = req.body.id;
+    let studentId = req.body.stdNum;
+
+    Student.findOneAndUpdate({studentNumber:studentId},
+        {$pull: {courses: id}},
+        {safe: true, upsert: true},
+        (err, s) => {
+            if(err){
+            console.log(err);
+            }else{
+                res.json(s);
+            }
         }
-    });
+    );
 }
 
 module.exports.RegisterCourse = function(req, res, next) {
