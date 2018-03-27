@@ -58,34 +58,22 @@ module.exports.GetStudentDetails = function(req, res, next) {
     });
 }
 
-module.exports.AddCourse = function(req, res, next) {
-    // My assumption here is that we will get the student number and course code and
-    // add the course to the student by finding both from database. Not sure if this is how its done.
+module.exports.RegisterCourse = function(req, res, next) {
 
-    let courseCode = req.body.code;
-    let studentId = req.body.studentId;
-    let student = new Student();
-    let course = new Course();
+    let id = req.body.id;
+    let studentId = req.body.stdNum;
 
-    Student.find({studentNumber:studentId}, (err, s) => {
-        if(err) {
-            return res.status(400).send({
-                message: getErrorMessage(err)
-            });
-        } else {
-            student = s;
+    Student.findOneAndUpdate({studentNumber:studentId},
+        {$push: {courses: id}},
+        {safe: true, upsert: true},
+        (err, s) => {
+            if(err){
+            console.log(err);
+            }else{
+                res.json(s);
+            }
         }
-    })
-
-    Course.find({courseCode:courseCode}, (err, c) => {
-        if(err) {
-            return res.status(400).send({
-                message: getErrorMessage(err)
-            });
-        } else {
-            course = c;
-        }
-    })
+    );   
 }
 
 // enroll in a course
@@ -101,10 +89,6 @@ module.exports.AddCourse = function(req, res, next) {
          return 'Unknown server error';
      }
  };
-
-
-
-
 
 // module.exports.CreateNewSurvey = function (req, res, next) {
 //     let newSurvey = survey({

@@ -7,6 +7,7 @@ import { StudentsComponent } from './students.component';
 import { Routes, RouterModule } from '@angular/router';
 import { ListComponent } from './list/list.component';
 import { DetailsComponent } from './details/details.component';
+import { RegisterComponent } from './register/register.component';
 import { StudentsService } from './students.service';
 
 const studentRoutes: Routes = [
@@ -17,6 +18,7 @@ const studentRoutes: Routes = [
       { path: '', component: ListComponent },
       { path: 'create', component: CreateComponent },
       { path: 'details', component: DetailsComponent },
+      { path: 'register', component: RegisterComponent },
     ],
   }
 
@@ -28,7 +30,7 @@ const studentRoutes: Routes = [
     FormsModule,
     RouterModule.forChild(studentRoutes),
   ],
-  declarations: [CreateComponent, StudentsComponent, ListComponent, DetailsComponent],
+  declarations: [CreateComponent, StudentsComponent, ListComponent, DetailsComponent, RegisterComponent],
   providers: [StudentsService]
 })
 export class StudentsModule { }

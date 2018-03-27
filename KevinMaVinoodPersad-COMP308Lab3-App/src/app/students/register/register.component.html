@@ -1,0 +1,37 @@
+<div class="pull-left" style="padding-top:30px; padding-bottom:10px"><h4><u>Student:</u></h4></div>
+<div class="col-md-12" style="padding-top:30px; padding-bottom:30px">
+                        <table class="table" align="center" >
+                                <tbody *ngFor="let stud of student"  class="text-left">
+                                    <tr>
+                                        <td><b>First Name</b>: {{ stud.firstName }}</td>
+                                        <td style="padding-left: 40px"><b>Last Name</b>: {{ stud.lastName }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Student Number</b>: {{ stud.studentNumber }}</td>
+                                        <td style="padding-left: 40px"><b>Program</b>: {{ stud.program }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                </div>
+<div class="col-md-8">
+    <h4 class="pull-left" style="margin-right:10px; padding-bottom:10px"><u>Please select the course to register:</u></h4>
+    <form  class="pull-left form-inline" (ngSubmit)="register()">
+        <div class="form-group" style="margin-right:10px">
+                <select (change)="onChange($event.target.value)" class="form-control">
+                        <option *ngFor="let c of course" value= "{{c._id}}">
+                            {{c.courseName}}
+                        </option>
+                    </select>
+        </div>
+        
+        <div class="form-group" style="margin-right:10px">
+                <input type="submit" name="submit" value="Register" class="btn btn-success"/>
+        </div>
+        <div class="form-group">
+                <button [routerLink]="['/students']" type="button" class="btn btn-warning">Cancel</button>
+        </div>
+        
+    </form>
+    
+
+</div>

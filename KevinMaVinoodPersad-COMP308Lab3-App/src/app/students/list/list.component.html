@@ -16,7 +16,7 @@
         <td>{{ stud.lastName }}</td>
         <td>{{ stud.program }}</td>
         <td>
-            <a href="#" class="btn btn-success" style="background-color:white;color:green;">Register Course</a>
+            <a [routerLink]="['register']" [queryParams]="{id: stud.studentNumber}" class="btn btn-success" style="background-color:white;color:green;">Register Course</a>
           <a [routerLink]="['details']" [queryParams]="{id: stud.studentNumber}" class="btn btn-primary pull-right" style="background-color:white;color:blue; ">Details</a></td>
       </tr>
     </tbody>
