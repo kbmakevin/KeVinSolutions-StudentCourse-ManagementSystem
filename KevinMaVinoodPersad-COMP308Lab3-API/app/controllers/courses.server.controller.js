@@ -15,7 +15,7 @@ const Course = require('../models/courses.server.model');
 // Course CRUD FUNCTIONS =======================================================
 
 // Get list of courses
-module.exports.GetCourse = function(req, res, next) {
+module.exports.GetCourses = function(req, res, next) {
     Course.find((err, courses) => {
         if (err) {
             return res.status(400).send({
@@ -55,6 +55,17 @@ module.exports.CreateCourse = function (req, res, next) {
              res.status(200).json(code);
          }
      });
+}
+
+module.exports.GetOneCourse = function(req, res, next) {
+    let id = req.params.id;
+    console.log("inside course controller " + id);
+
+    Course.findOne({_id:id})
+    .populate('students')
+    .exec((err, course) => {
+        res.json(course);
+    })
 }
 
 function getErrorMessage(err) {

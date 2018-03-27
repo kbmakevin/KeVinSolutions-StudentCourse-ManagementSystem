@@ -13,6 +13,7 @@ const Student = require('../models/students.server.model');
 const Course = require('../models/courses.server.model');
 
 // STUDENT CRUD FUNCTIONS =======================================================
+
 // add student
 module.exports.Create = function (req, res, next) {
     let student = Student(req.body);
@@ -44,10 +45,10 @@ module.exports.GetStudents = function(req, res, next) {
 }
 
 module.exports.GetStudentDetails = function(req, res, next) {
-    let studentNum = req.params.id;
-    console.log("inside controller " + studentNum);
+    let id = req.params.id;
+    console.log("inside controller " + id);
 
-    Student.findOne({studentNumber:studentNum})
+    Student.findOne({studentNumber:id})
     .populate('courses')
     .exec((err, student) => {
         res.json(student);
@@ -74,19 +75,29 @@ module.exports.RemoveCourseFromStudent = function(req, res, next) {
 module.exports.RegisterCourse = function(req, res, next) {
 
     let id = req.body.id;
-    let studentId = req.body.stdNum;
+    let studentId = req.body.stdId;
 
-    Student.findOneAndUpdate({studentNumber:studentId},
+    Student.findOneAndUpdate({_id:studentId},
         {$push: {courses: id}},
         {safe: true, upsert: true},
         (err, s) => {
             if(err){
             console.log(err);
             }else{
-                res.json(s);
+                Course.findOneAndUpdate({_id:id},
+                    {$push: {students: s._id}},
+                    {safe: true, upsert: true},
+                    (err, c) => {
+                        if(err){
+                        console.log(err);
+                        }else{
+                            res.json(c);
+                        }
+                    }
+                );
             }
         }
-    );   
+    );
 }
 
 // enroll in a course

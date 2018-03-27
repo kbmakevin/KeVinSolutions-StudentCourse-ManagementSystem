@@ -1,14 +1,14 @@
 <div class="pull-left" style="padding-top:30px; padding-bottom:10px"><h4><u>Student:</u></h4></div>
 <div class="col-md-12" style="padding-top:30px; padding-bottom:30px">
                         <table class="table" align="center" >
-                                <tbody *ngFor="let stud of student"  class="text-left">
+                                <tbody   class="text-left">
                                     <tr>
-                                        <td><b>First Name</b>: {{ stud.firstName }}</td>
-                                        <td style="padding-left: 40px"><b>Last Name</b>: {{ stud.lastName }}</td>
+                                        <td><b>First Name</b>: {{ student.firstName }}</td>
+                                        <td style="padding-left: 40px"><b>Last Name</b>: {{ student.lastName }}</td>
                                     </tr>
                                     <tr>
-                                        <td><b>Student Number</b>: {{ stud.studentNumber }}</td>
-                                        <td style="padding-left: 40px"><b>Program</b>: {{ stud.program }}</td>
+                                        <td><b>Student Number</b>: {{ student.studentNumber }}</td>
+                                        <td style="padding-left: 40px"><b>Program</b>: {{ student.program }}</td>
                                     </tr>
                                 </tbody>
                             </table>

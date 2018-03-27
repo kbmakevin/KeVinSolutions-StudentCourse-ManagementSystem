@@ -31,7 +31,7 @@ interface Course {
 })
 export class RegisterComponent implements OnInit {
 
-  studentNum: String;
+  studentId: String;
   student: Student;
   course: Course;
   selectedId: String;
@@ -39,7 +39,7 @@ export class RegisterComponent implements OnInit {
 
   constructor(private _router: Router,private _route: ActivatedRoute,
     private _studentsService: StudentsService, private _coursesService: CoursesService) {
-        this._route.queryParams.subscribe(params => this.studentNum = params['id']);
+        this._route.queryParams.subscribe(params => this.studentId = params['id']);
         
      }
 
@@ -51,7 +51,7 @@ export class RegisterComponent implements OnInit {
       });
 
     this._studentsService
-    .getStudent(this.studentNum)
+    .getStudent(this.studentId)
     .subscribe((res) => {
         this.student = res
         console.log(this.student);
@@ -60,16 +60,16 @@ export class RegisterComponent implements OnInit {
 
   register() {
       let details = {
-          stdNum: this.studentNum,
+          stdId: this.studentId,
           id: this.selectedId
       }
     this._studentsService
     .registerCourse(details)
-    .subscribe((res) => {
-        this.student = res
-        console.log(this.student);
-    });
-  }
+    .subscribe(res => 
+      this._router.navigate(['details'],  { queryParams: { id: this.studentId } }),
+        error => this.errorMessage = error);
+    }
+  
 
   onChange(id) {
       this.selectedId = id;

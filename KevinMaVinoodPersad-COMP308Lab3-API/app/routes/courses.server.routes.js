@@ -21,11 +21,15 @@ router.post('/', (req, res, next) => {
 });
 
 router.get('/', (req, res, next) => {
-    coursesController.GetCourse(req, res, next);
+    coursesController.GetCourses(req, res, next);
 });
 
 router.get('/delete/:code', (req, res, next) => {
     coursesController.DeleteCourse(req, res, next);
+});
+
+router.get('/:id', (req, res, next) => {
+    coursesController.GetOneCourse(req, res, next);
 });
 
 

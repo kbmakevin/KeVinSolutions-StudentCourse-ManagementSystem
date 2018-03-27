@@ -34,10 +34,8 @@ interface Student {
     studentNum: string;
     student: Student;
     errorMessage: string;
-    NoEdit: Boolean = true;
-
+    registered: Boolean = false;
     course: Course;
-    courses: Course[];
 
     constructor(private _route: ActivatedRoute, private _studentsService: StudentsService) {
             this._route.queryParams.subscribe(params => this.studentNum = params['id']);
@@ -45,24 +43,25 @@ interface Student {
          }
 
     ngOnInit() {
-        let s = +this.studentNum;
 
         this._studentsService
-        .getStudent(s)
+        .getStudent(this.studentNum)
         .subscribe((res) => {
             this.student = res;
+            if(this.student.courses.length > 0) {
+                this.registered = true;
+            }
         });
 
-        console.log(this.student);
+        console.log(this.registered);
     }
 
-    editStudentCourse() {
-        if(!this.NoEdit) {
-            this.NoEdit = true;
-        }
-        else {
-            this.NoEdit = false;
-        }
+    dropCourse(id: string) {
+        console.log("Inside drop course in student module");
+        this._studentsService
+        .dropCourse(this.studentNum, id)
+        .subscribe((res) => {
+            this.ngOnInit();
+        });
     }
-        
   }

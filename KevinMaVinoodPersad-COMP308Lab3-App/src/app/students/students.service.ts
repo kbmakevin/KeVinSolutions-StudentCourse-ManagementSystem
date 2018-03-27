@@ -30,11 +30,23 @@ export class StudentsService {
     .get(this._baseURL + '/' + id)
     .map((res: Response) =>   res.json())
     .catch(this.handleError);
+
   }
 
   registerCourse(details: any): Observable<any> {
     return this._http
       .post(this._baseURL + '/registercourse',details)
+      .map((res: Response) => res.json())
+      .catch(this.handleError);
+  }
+
+  dropCourse(courseCode: any, id: any): Observable<any> {
+    let details = {
+      stdNum: courseCode,
+      id: id
+    }
+    return this._http
+      .post(this._baseURL +'/removecourse', details)
       .map((res: Response) => res.json())
       .catch(this.handleError);
   }

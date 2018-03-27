@@ -20,7 +20,13 @@
           <td>{{ c.section }}</td>
           <td>{{ c.semester }}</td>
           <td>
-            <a (click)="deleteCourse(c.courseCode)" class="btn btn-danger pull-right" style="background-color:white;color:red; ">Delete</a></td>
+            <div class="pull-right">
+                <a [routerLink]="[]" class="btn btn-success" style="background-color:white;color:green;">Edit</a>
+                <a (click)="deleteCourse(c.courseCode)" class="btn btn-danger" style="background-color:white;color:red; ">Delete</a>
+                <a [routerLink]="['coursedetails']" [queryParams]="{id: c._id}" class="btn btn-primary" style="background-color:white;color:blue;">Details</a>
+            </div>
+
+          </td>
         </tr>
       </tbody>
     </table>
