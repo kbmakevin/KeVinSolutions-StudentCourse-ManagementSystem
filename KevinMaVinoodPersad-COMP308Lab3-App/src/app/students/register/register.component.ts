@@ -73,6 +73,7 @@ export class RegisterComponent implements OnInit {
 
   onChange(id) {
       this.selectedId = id;
+      console.log(this.selectedId);
   }
 
 }

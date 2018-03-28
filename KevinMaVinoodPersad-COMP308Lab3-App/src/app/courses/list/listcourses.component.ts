@@ -3,11 +3,25 @@ import { Router } from '@angular/router';
 import { CoursesService } from '../courses.service';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
+interface Student {
+  studentNumber: Number;
+  password: String;
+  firstName: String;
+  lastName: String;
+  address: String;
+  city: String;
+  phoneNumber: String;
+  email: String;
+  program: String;
+  courses: Course[];
+}
+
 interface Course {
   courseCode: String;
   courseName: String;
   section: Number;
   semester: Number;
+  students: Student[];
 }
 
 @Component({

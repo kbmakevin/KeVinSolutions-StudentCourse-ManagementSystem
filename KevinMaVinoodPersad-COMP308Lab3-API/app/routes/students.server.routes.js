@@ -25,14 +25,14 @@ router.get('/', (req, res, next) => {
 
 router.get('/:id', (req, res, next) => {
     studentsController.GetStudentDetails(req, res, next);
-})
+});
 
 router.post('/registercourse', (req, res, next) => {
     studentsController.RegisterCourse(req, res, next);
-})
+});
 
 router.post('/removecourse', (req, res, next) => {
     studentsController.RemoveCourseFromStudent(req, res, next);
-})
+});
 
 module.exports = router;

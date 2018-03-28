@@ -27,7 +27,6 @@ export class ListComponent implements OnInit {
 
   constructor(private _router: Router,
     private _studentsService: StudentsService) {
-        
      }
 
   ngOnInit() {

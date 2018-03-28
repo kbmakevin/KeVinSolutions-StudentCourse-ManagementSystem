@@ -40,9 +40,10 @@ export class CreateComponent {
   constructor(private _router: Router,
     private _studentsService: StudentsService) { }
 
+
   create() {
 
-    console.log(`inside create component: 
+    console.log(`inside create component:
     my student is: ${this.student}
     `);
 
@@ -51,8 +52,7 @@ export class CreateComponent {
     this._studentsService
       .create(this.student)
       .subscribe(createdStudent =>
-        this._router.navigate(['/students',
-          createdStudent.studentNumber]),
+        this._router.navigate(['/students/details'], { queryParams: { 'id': createdStudent._id}}),
         error => this.errorMessage = error);
   }
 }

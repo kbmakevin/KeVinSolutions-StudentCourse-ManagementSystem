@@ -32,5 +32,9 @@ router.get('/:id', (req, res, next) => {
     coursesController.GetOneCourse(req, res, next);
 });
 
+router.post('/removestudent', (req, res, next) => {
+    coursesController.RemoveStudentFromCourse(req, res, next);
+});
+
 
 module.exports = router;

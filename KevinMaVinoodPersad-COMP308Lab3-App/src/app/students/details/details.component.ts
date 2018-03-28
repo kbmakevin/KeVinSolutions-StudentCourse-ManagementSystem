@@ -37,7 +37,7 @@ interface Student {
     registered: Boolean = false;
     course: Course;
 
-    constructor(private _route: ActivatedRoute, private _studentsService: StudentsService) {
+    constructor(private _route: ActivatedRoute,  private _studentsService: StudentsService) {
             this._route.queryParams.subscribe(params => this.studentNum = params['id']);
             
          }

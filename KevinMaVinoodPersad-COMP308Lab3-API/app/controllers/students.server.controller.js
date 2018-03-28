@@ -48,7 +48,7 @@ module.exports.GetStudentDetails = function(req, res, next) {
     let id = req.params.id;
     console.log("inside controller " + id);
 
-    Student.findOne({studentNumber:id})
+    Student.findOne({_id:id})
     .populate('courses')
     .exec((err, student) => {
         res.json(student);
@@ -70,7 +70,7 @@ module.exports.RemoveCourseFromStudent = function(req, res, next) {
             }
         }
     );
-}
+};
 
 module.exports.RegisterCourse = function(req, res, next) {
 

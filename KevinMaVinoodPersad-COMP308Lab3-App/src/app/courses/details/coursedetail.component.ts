@@ -1,5 +1,5 @@
 
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CoursesService } from '../courses.service';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
@@ -21,7 +21,7 @@ interface Student {
     courseCode: String;
     courseName: String;
     section: Number;
-    semester:Number;
+    semester: Number;
     students: Student[];
   }
 
@@ -38,9 +38,8 @@ interface Student {
     hasStudents: Boolean = false;
     course: Course;
 
-    constructor(private _route: ActivatedRoute, private _coursesService: CoursesService) {
+  constructor(private _route: ActivatedRoute, private _router: Router, private _coursesService: CoursesService) {
             this._route.queryParams.subscribe(params => this.courseId = params['id']);
-            
          }
 
     ngOnInit() {
@@ -48,14 +47,25 @@ interface Student {
         .getCourse(this.courseId)
         .subscribe((res) => {
             this.course = res;
-            if(this.course.students.length > 0) {
+            if (this.course.students.length > 0) {
                 this.hasStudents = true;
             }
+            
         });
     }
 
     dropStudent(id) {
-      console.log(id)
-    }
+      console.log(id + ',' + this.courseId);
+      
+      let details = {
+        cId: this.courseId,
+        stdId: id
+      }
+      this._coursesService
+        .dropStudent(details)
+        .subscribe(res =>
+          this._router.navigate(['details'], { queryParams: { id: this.courseId } }),
+          error => this.errorMessage = error);
+        }
 
   }

@@ -78,3 +78,30 @@ function getErrorMessage(err) {
         return 'Unknown server error';
     }
 };
+
+module.exports.RemoveStudentFromCourse = function(req, res, next) {
+    let c_Id = req.body.cId;
+    let s_Id = req.body.stdId;
+
+    Course.findOneAndUpdate({ _id: c_Id },
+        { $pull: { students: s_Id } },
+        { safe: true, upsert: true },
+        (err, c) => {
+            if (err) {
+                console.log(err);
+            } else {
+                Student.findOneAndUpdate({ _id: s_Id },
+                    { $pull: { courses: c._Id } },
+                    { safe: true, upsert: true },
+                    (err, s) => {
+                        if (err) {
+                            console.log(err);
+                        } else {
+                            res.json(s);
+                        }
+                    }
+                );
+            }
+        }
+    );
+};

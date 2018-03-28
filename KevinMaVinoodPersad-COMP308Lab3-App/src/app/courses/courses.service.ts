@@ -41,6 +41,13 @@ export class CoursesService {
         .catch(this.handleError);
     }
 
+    dropStudent(details: any): Observable<any> {
+        return this._http
+            .post(this._courseBaseURL + '/removestudent', details)
+            .map((res: Response) => res.json())
+            .catch(this.handleError);
+    }
+
     private handleError(error: Response) {
         return Observable.throw(error.json().message || 'Server error');
       }
