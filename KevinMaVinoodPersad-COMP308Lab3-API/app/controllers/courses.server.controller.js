@@ -83,6 +83,7 @@ module.exports.RemoveStudentFromCourse = function(req, res, next) {
     let c_Id = req.body.cId;
     let s_Id = req.body.stdId;
 
+    console.log(c_Id + ", " + s_Id);
     Course.findOneAndUpdate({ _id: c_Id },
         { $pull: { students: s_Id } },
         { safe: true, upsert: true },
@@ -91,7 +92,7 @@ module.exports.RemoveStudentFromCourse = function(req, res, next) {
                 console.log(err);
             } else {
                 Student.findOneAndUpdate({ _id: s_Id },
-                    { $pull: { courses: c._Id } },
+                    { $pull: { courses: c_Id } },
                     { safe: true, upsert: true },
                     (err, s) => {
                         if (err) {
@@ -105,3 +106,16 @@ module.exports.RemoveStudentFromCourse = function(req, res, next) {
         }
     );
 };
+
+module.exports.UpdateCourse = function(req, res, next) {
+
+    Course.findByIdAndUpdate(req.body._id, req.body,(err, c) => {
+        if(err) {
+            return res.status(400).send({
+                message: getErrorMessage(err)
+            })
+        } else {
+            res.json(c);
+        }
+    })
+}

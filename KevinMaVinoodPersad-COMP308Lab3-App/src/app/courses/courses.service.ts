@@ -48,6 +48,13 @@ export class CoursesService {
             .catch(this.handleError);
     }
 
+    updateCourse(c: any): Observable<any> {
+        return this._http
+            .post(this._courseBaseURL + '/updatecourse', c)
+            .map((res: Response) => res.json())
+            .catch(this.handleError);
+    }
+
     private handleError(error: Response) {
         return Observable.throw(error.json().message || 'Server error');
       }

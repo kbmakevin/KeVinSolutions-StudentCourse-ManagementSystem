@@ -59,15 +59,26 @@ export class RegisterComponent implements OnInit {
   }
 
   register() {
-      let details = {
-          stdId: this.studentId,
-          id: this.selectedId
+      if(this.selectedId == null) {
+        console.log("Its null");
+      } else if(this.selectedId == "") {
+        console.log("its empty");
+      } else {
+          if(this.selectedId != "none") {
+            let details = {
+              stdId: this.studentId,
+              id: this.selectedId
+            }
+            this._studentsService
+            .registerCourse(details)
+            .subscribe(res => 
+              this._router.navigate(['/students/details'],  { queryParams: { id: this.studentId } }),
+                error => this.errorMessage = error);
+          } else {
+            console.log("selected value is empty");
+          }
       }
-    this._studentsService
-    .registerCourse(details)
-    .subscribe(res => 
-      this._router.navigate(['details'],  { queryParams: { id: this.studentId } }),
-        error => this.errorMessage = error);
+      
     }
   
 

@@ -36,5 +36,9 @@ router.post('/removestudent', (req, res, next) => {
     coursesController.RemoveStudentFromCourse(req, res, next);
 });
 
+router.post('/updatecourse', (req, res, next) => {
+    coursesController.UpdateCourse(req, res, next);
+});
+
 
 module.exports = router;

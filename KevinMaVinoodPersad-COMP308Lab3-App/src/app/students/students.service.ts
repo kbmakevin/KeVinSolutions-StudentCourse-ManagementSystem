@@ -40,10 +40,10 @@ export class StudentsService {
       .catch(this.handleError);
   }
 
-  dropCourse(courseCode: any, id: any): Observable<any> {
+  dropCourse(s_id: any, c_id: any): Observable<any> {
     let details = {
-      stdNum: courseCode,
-      id: id
+      stdNum: s_id,
+      id: c_id
     }
     return this._http
       .post(this._baseURL +'/removecourse', details)

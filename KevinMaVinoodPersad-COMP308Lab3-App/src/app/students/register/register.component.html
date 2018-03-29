@@ -18,6 +18,7 @@
     <form  class="pull-left form-inline" (ngSubmit)="register()">
         <div class="form-group" style="margin-right:10px">
                 <select (change)="onChange($event.target.value)" class="form-control">
+                    <option value=""></option>
                         <option *ngFor="let c of course" value= "{{c._id}}">
                             {{c.courseName}}
                         </option>

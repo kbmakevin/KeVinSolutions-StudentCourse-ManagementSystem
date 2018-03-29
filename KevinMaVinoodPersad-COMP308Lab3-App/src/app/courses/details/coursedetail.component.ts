@@ -64,7 +64,7 @@ interface Student {
       this._coursesService
         .dropStudent(details)
         .subscribe(res =>
-          this._router.navigate(['details'], { queryParams: { id: this.courseId } }),
+          this._router.navigate(['/courses/coursedetails'], { queryParams: { id: this.courseId } }),
           error => this.errorMessage = error);
         }
 

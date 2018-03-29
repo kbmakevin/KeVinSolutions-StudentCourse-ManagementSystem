@@ -31,21 +31,21 @@ interface Student {
   })
 
   export class DetailsComponent implements OnInit {
-    studentNum: string;
+    studentId: string;
     student: Student;
     errorMessage: string;
     registered: Boolean = false;
     course: Course;
 
     constructor(private _route: ActivatedRoute,  private _studentsService: StudentsService) {
-            this._route.queryParams.subscribe(params => this.studentNum = params['id']);
+            this._route.queryParams.subscribe(params => this.studentId = params['id']);
             
          }
 
     ngOnInit() {
 
         this._studentsService
-        .getStudent(this.studentNum)
+        .getStudent(this.studentId)
         .subscribe((res) => {
             this.student = res;
             if(this.student.courses.length > 0) {
@@ -56,10 +56,10 @@ interface Student {
         console.log(this.registered);
     }
 
-    dropCourse(id: string) {
+    dropCourse(c_id: string) {
         console.log("Inside drop course in student module");
         this._studentsService
-        .dropCourse(this.studentNum, id)
+        .dropCourse(this.studentId, c_id)
         .subscribe((res) => {
             this.ngOnInit();
         });

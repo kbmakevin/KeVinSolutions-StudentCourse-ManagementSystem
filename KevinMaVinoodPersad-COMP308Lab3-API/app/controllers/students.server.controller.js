@@ -56,17 +56,26 @@ module.exports.GetStudentDetails = function(req, res, next) {
 }
 
 module.exports.RemoveCourseFromStudent = function(req, res, next) {
-    let id = req.body.id;
+    let c_id = req.body.id;
     let studentId = req.body.stdNum;
 
-    Student.findOneAndUpdate({studentNumber:studentId},
-        {$pull: {courses: id}},
+    Student.findOneAndUpdate({_id:studentId},
+        {$pull: {courses: c_id}},
         {safe: true, upsert: true},
         (err, s) => {
             if(err){
             console.log(err);
             }else{
-                res.json(s);
+                Course.findOneAndUpdate({_id:c_id},
+                    {$pull: {students:s._id}},
+                    {safe: true, upsert: true},
+                    (err, c) => {
+                    if(err){
+                        console.log(err);
+                    }else{
+                        res.json(c);
+                    }
+                })
             }
         }
     );
