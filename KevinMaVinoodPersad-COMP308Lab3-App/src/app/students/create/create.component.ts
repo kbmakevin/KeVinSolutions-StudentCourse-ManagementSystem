@@ -1,18 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { StudentsService } from '../students.service';
-
-interface Student {
-  studentNumber: Number;
-  password: String;
-  firstName: String;
-  lastName: String;
-  address: String;
-  city: String;
-  phoneNumber: String;
-  email: String;
-  program: String;
-}
+import { Student } from '../../interfaces/student';
 
 @Component({
   selector: 'app-create',
@@ -34,25 +23,19 @@ export class CreateComponent {
     program: 'Software Engineering Technology'
 
   };
-  studentNumber: Number = 52;
   errorMessage: string;
 
   constructor(private _router: Router,
     private _studentsService: StudentsService) { }
 
   create() {
-
-    console.log(`inside create component: 
-    my student is: ${this.student}
-    `);
-
-    console.log(`number is : ${this.studentNumber}`);
-
     this._studentsService
       .create(this.student)
       .subscribe(createdStudent =>
-        this._router.navigate(['/students',
-          createdStudent.studentNumber]),
+        // 2018.03.27 - 09:31:28 - updated route
+        this._router.navigate(['/students/details'],
+          { queryParams: { 'id': createdStudent.studentNumber } }
+        ),
         error => this.errorMessage = error);
   }
 }

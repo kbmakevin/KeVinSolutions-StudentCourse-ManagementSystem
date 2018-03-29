@@ -1,4 +1,4 @@
-import 'rxjs/Rx';
+// import 'rxjs/Rx';
 import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
 import { Http, Headers, Request, RequestMethod, Response } from '@angular/http';
@@ -27,9 +27,9 @@ export class StudentsService {
 
   getStudent(id: any): Observable<any> {
     return this._http
-    .get(this._baseURL + '/' + id)
-    .map((res: Response) =>   res.json())
-    .catch(this.handleError);
+      .get(this._baseURL + '/' + id)
+      .map((res: Response) => res.json())
+      .catch(this.handleError);
   }
 
   private handleError(error: Response) {

@@ -2,13 +2,7 @@
 import { Router } from '@angular/router';
 import { CoursesService } from '../courses.service';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-
-interface Course {
-  courseCode: String;
-  courseName: String;
-  section: Number;
-  semester: Number;
-}
+import { Course } from '../../interfaces/course';
 
 @Component({
   selector: 'app-listcourse',
@@ -23,20 +17,20 @@ export class ListCoursesComponent implements OnInit {
   constructor(private _router: Router,
     private _coursesService: CoursesService) {
 
-    }
+  }
 
   ngOnInit() {
     this._coursesService.listCourses()
-    .subscribe((course) => {
-      this.course = course;
-      console.log(course);
+      .subscribe((course) => {
+        this.course = course;
+        console.log(course);
       });
   }
 
   deleteCourse(code: String) {
     this._coursesService.deleteCourse(code)
-    .subscribe(c => this.ngOnInit(),
-      error => this.errorMessage = error);
+      .subscribe(c => this.ngOnInit(),
+        error => this.errorMessage = error);
   }
 
 }

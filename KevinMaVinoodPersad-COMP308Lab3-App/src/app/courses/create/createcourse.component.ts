@@ -3,13 +3,7 @@ import { Router } from '@angular/router';
 import { CoursesService } from '../courses.service';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { NgForm } from '@angular/forms';
-
-interface Course {
-  courseCode: String;
-  courseName: String;
-  section: Number;
-  semester: Number;
-}
+import { Course } from '../../interfaces/course';
 
 @Component({
   selector: 'app-createcourse',
@@ -29,20 +23,20 @@ export class CreateCourseComponent implements OnInit {
   constructor(private _router: Router,
     private _coursesService: CoursesService) {
 
-    }
+  }
 
   ngOnInit() {
 
   }
 
   create(form: NgForm) {
-    console.log("In course create method");
+    console.log('In course create method');
 
     this._coursesService
-    .createCourses(this.course)
-    .subscribe(course => 
-      this._router.navigate(['courses']),
-      error =>this.errorMessage = error)
+      .createCourses(this.course)
+      .subscribe(course =>
+        this._router.navigate(['courses']),
+        error => this.errorMessage = error)
   };
 
 }

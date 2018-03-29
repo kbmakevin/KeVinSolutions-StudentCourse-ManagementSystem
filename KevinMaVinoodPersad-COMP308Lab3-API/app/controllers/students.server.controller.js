@@ -11,16 +11,51 @@ const mongoose = require('mongoose');
 // student object created from the Schema / model
 const Student = require('../models/students.server.model');
 const Course = require('../models/courses.server.model');
+const passport = require('passport');
 
 // STUDENT CRUD FUNCTIONS =======================================================
 // add student
+// module.exports.Create = function (req, res, next) {
+
+//     // if (!req.student) {
+//     let student = Student(req.body);
+//     // let message = null;
+//     student.provider = 'local';
+//     console.log('somebody is trying to add a student now!');
+//     console.log(student);
+//     // }
+
+//     student.save(err => {
+//         if (err) {
+//             console.log(err);
+//             return res.status(400).send({
+//                 message: getErrorMessage(err)
+//             });
+//         } else {
+//             res.status(200).json(student);
+//         }
+//     })
+
+//     user.save(function (err) {
+//         if (err) {
+//             varmessage = getErrorMessage(err); req.flash('error', message); returnres.redirect('/signup');
+//         } req.login(user, function (err) { //req.loginis Passport method
+//             if (err) return next(err);
+//             return res.redirect('/');
+//         });
+//     });
+// }
+
+// working create method - prior to adding registration
 module.exports.Create = function (req, res, next) {
     let student = Student(req.body);
+    student.provider = 'local';
     console.log('somebody is trying to add a student now!');
     console.log(student);
     // next();
     student.save(err => {
         if (err) {
+            console.log(err);
             return res.status(400).send({
                 message: getErrorMessage(err)
             });
@@ -30,35 +65,46 @@ module.exports.Create = function (req, res, next) {
     })
 }
 
-module.exports.GetStudents = function(req, res, next) {
+module.exports.GetStudents = function (req, res, next) {
 
-    Student.find((err, students) => {
-        if (err) {
-            return res.status(400).send({
-                message: getErrorMessage(err)
-            });
-        } else {
-            res.status(200).json(students);
-        }
-    });
+    Student.find(
+        {
+            // don't show the existence of admin user to public!
+            studentNumber: { $ne: 1 }
+        },
+        // 2018.03.27 - 09:56:39 - dont show password or salt!
+        '-password -salt',
+        (err, students) => {
+            if (err) {
+                return res.status(400).send({
+                    message: getErrorMessage(err)
+                });
+            } else {
+                res.status(200).json(students);
+            }
+        });
 }
 
-module.exports.GetStudentDetails = function(req, res, next) {
+module.exports.GetStudentDetails = function (req, res, next) {
     let studentNum = req.params.id;
     console.log("inside controller " + studentNum);
-    Student.find({studentNumber:studentNum}, (err, student) => {
-        if (err) {
-            return res.status(400).send({
-                message: getErrorMessage(err)
-            });
-        } else {
-            console.log(student);
-            res.status(200).json(student);
-        }
-    });
+    Student.find(
+        { studentNumber: studentNum },
+        // 2018.03.27 - 09:56:39 - dont show password or salt!
+        '-password -salt',
+        (err, student) => {
+            if (err) {
+                return res.status(400).send({
+                    message: getErrorMessage(err)
+                });
+            } else {
+                console.log(student);
+                res.status(200).json(student);
+            }
+        });
 }
 
-module.exports.AddCourse = function(req, res, next) {
+module.exports.AddCourse = function (req, res, next) {
     // My assumption here is that we will get the student number and course code and
     // add the course to the student by finding both from database. Not sure if this is how its done.
 
@@ -67,8 +113,8 @@ module.exports.AddCourse = function(req, res, next) {
     let student = new Student();
     let course = new Course();
 
-    Student.find({studentNumber:studentId}, (err, s) => {
-        if(err) {
+    Student.find({ studentNumber: studentId }, (err, s) => {
+        if (err) {
             return res.status(400).send({
                 message: getErrorMessage(err)
             });
@@ -77,8 +123,8 @@ module.exports.AddCourse = function(req, res, next) {
         }
     })
 
-    Course.find({courseCode:courseCode}, (err, c) => {
-        if(err) {
+    Course.find({ courseCode: courseCode }, (err, c) => {
+        if (err) {
             return res.status(400).send({
                 message: getErrorMessage(err)
             });
@@ -90,17 +136,77 @@ module.exports.AddCourse = function(req, res, next) {
 
 // enroll in a course
 
+// AUTHENTICATION ===========================================================
+// create will take care of registration/signup
+// 2018.03.28 - 22:07:07 - don't need this...logout taken care of in ng app
+// module.exports.Logout = function (req, res, next) {
+//     // invalidate the authenticated session using a Passport method
+//     req.logout();
+// }
+
+module.exports.Login = function (req, res, next) {
+    // 2018.03.27 - 10:18:56
+    passport.authenticate('local', (err, student, info) => {
+        // res.send(JSON.stringify(info)).status(200)
+
+        if (err || !student) {
+            res.status(400).send(info);
+        } else {
+            // Use the Passport 'login' method to login
+            req.login(student, (err) => {
+                if (err) {
+                    res.status(400).send(err);
+                } else {
+                    console.log(`${student.firstName} ${student.lastName} (#${student.studentNumber}) has logged into the system...`);
+                    res.json(student);
+                }
+            });
+        }
+    })(req, res, next);
+}
+
+// 2018.03.28 - 16:41:37 - used for authentication middleware
+module.exports.RequiresLogin = function (req, res, next) {
+    // uses Passport initiated authentication method
+    if (!req.isAuthenticated()) {
+        return res.status(401).send({
+            message: 'User is not logged in'
+        });
+    }
+    // if user is signed in calls the next middleware in the chain
+    next();
+}
+
+// 2018.03.28 - 16:43:51 - used for authorization middleware
+module.exports.HasAuthorization = function (req, res, next) {
+
+}
+
 // HELPER FUNCTIONS ===========================================================
- function getErrorMessage(err) {
-     if (err.errors) {
-         for (let errName in err.errors) {
-             if (err.errors[errName].message) return err.errors[errName].
-                 message;
-         }
-     } else {
-         return 'Unknown server error';
-     }
- };
+function getErrorMessage(err) {
+    let message = '';
+    if (err.code) {
+        switch (err.code) {
+            case 11000:
+            case 11001:
+                message = 'Student number already exists';
+                break;
+            default:
+                message = 'Something went wrong';
+        }
+    } else {
+        // mongoose validation error
+        if (err.errors) {
+            for (let errName in err.errors) {
+                if (err.errors[errName].message)
+                    message = err.errors[errName].message;
+            }
+        } else {
+            message = 'Unknown server error';
+        }
+    }
+    return message;
+};
 
 
 
