@@ -9,6 +9,9 @@ import { CoursesComponent } from './courses/courses.component';
 import { ListCoursesComponent } from './courses/list/listcourses.component';
 import { CreateCourseComponent } from './courses/create/createcourse.component';
 import { AuthGuard } from './authentication/auth.guard';
+import { RoleGuard } from './authentication/role.guard';
+import { UpdateComponent } from './students/update/update.component';
+import { PersonalGuard } from './authentication/personal.guard';
 
 // 2018.03.30 - 12:34:17 - created app.routing for all routes in application
 
@@ -22,7 +25,10 @@ const appRoutes: Routes = [
         canActivate: [AuthGuard],
         children: [
             { path: '', component: ListComponent },
-            { path: 'create', component: CreateComponent },
+            // only admins can create new students
+            { path: 'create', component: CreateComponent, canActivate: [RoleGuard] },
+            // 2018.03.31 - 16:53:36 - students can only edit THEIR OWN profiles
+            { path: 'update', component: UpdateComponent, canActivate: [PersonalGuard] },
             { path: 'details', component: DetailsComponent },
         ],
     },
@@ -35,6 +41,7 @@ const appRoutes: Routes = [
             { path: 'create', component: CreateCourseComponent }
         ]
     },
+    // { path: 'profile', redirectTo: 'students/details' },
     { path: '**', redirectTo: 'home' }
 ];
 

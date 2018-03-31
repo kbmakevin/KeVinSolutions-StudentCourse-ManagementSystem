@@ -1,9 +1,9 @@
-
 import { ActivatedRoute } from '@angular/router';
 import { StudentsService } from '../students.service';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Student } from '../../interfaces/student';
 import { Course } from '../../interfaces/course';
+
 
 @Component({
     selector: 'app-details',
@@ -12,50 +12,36 @@ import { Course } from '../../interfaces/course';
 })
 
 export class DetailsComponent implements OnInit {
-    studentNum: string;
+    studentId: string;
     student: Student;
-    errorMessage: string;
-    NoEdit: Boolean = true;
+    registered: Boolean = false;
 
-    course: Course = {
-        courseCode: "COMP 308",
-        courseName: "Emergin Tech",
-        section: 2,
-        semester: 4
-    }
-
-    course2: Course = {
-        courseCode: "COMP 231",
-        courseName: "Java EE",
-        section: 3,
-        semester: 3
-    }
-
-    courses: Course[] = [this.course, this.course2];
-
-    constructor(private _route: ActivatedRoute, private _studentsService: StudentsService) {
-        this._route.queryParams.subscribe(params => this.studentNum = params['id']);
-
+    constructor(
+        private _route: ActivatedRoute,
+        private _studentsService: StudentsService) {
+        this._route.queryParams.subscribe(params => this.studentId = params['id']);
     }
 
     ngOnInit() {
-        let s = +this.studentNum;
 
         this._studentsService
-            .getStudent(s)
+            .getStudent(this.studentId)
             .subscribe((res) => {
-                this.student = res
-                console.log(this.student);
+                this.student = res;
+                if (this.student.courses.length > 0) {
+                    this.registered = true;
+                }
             });
+
+        console.log(this.registered);
     }
 
-    editStudentCourse() {
-        if (!this.NoEdit) {
-            this.NoEdit = true;
-        }
-        else {
-            this.NoEdit = false;
-        }
-    }
-
+    // dropCourse(c_id: string) {
+    //     console.log("Inside drop course in student module");
+    //     this._studentsService
+    //         .dropCourse(this.studentId, c_id)
+    //         .subscribe((res) => {
+    //             this.ngOnInit();
+    //         });
+    // }
 }

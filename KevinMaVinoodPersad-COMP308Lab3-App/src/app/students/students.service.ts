@@ -2,6 +2,7 @@
 import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
 import { Http, Headers, Request, RequestMethod, Response } from '@angular/http';
+import { Student } from '../interfaces/student';
 
 
 @Injectable()
@@ -29,6 +30,14 @@ export class StudentsService {
     return this._http
       .get(this._baseURL + '/' + id)
       .map((res: Response) => res.json())
+      // .catch((err: any) => console.log(err));
+      .catch(this.handleError);
+  }
+
+  updateStudent(id: String, student: Student): Observable<any> {
+    return this._http
+      .put(this._baseURL + '/' + id, student)
+      .map(res => res.json())
       .catch(this.handleError);
   }
 

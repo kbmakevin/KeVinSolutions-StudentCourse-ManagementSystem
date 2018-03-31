@@ -1,4 +1,7 @@
+import { Course } from './course';
+
 export interface Student {
+    _id?: String;
     studentNumber: Number;
     password: String;
     firstName: String;
@@ -8,4 +11,6 @@ export interface Student {
     phoneNumber: String;
     email: String;
     program: String;
+    role?: String;
+    courses: Course[];
 }

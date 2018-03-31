@@ -9,6 +9,7 @@ import { ListComponent } from './list/list.component';
 import { DetailsComponent } from './details/details.component';
 import { StudentsService } from './students.service';
 import { routing } from '../app.routing';
+import { UpdateComponent } from './update/update.component';
 
 @NgModule({
   imports: [
@@ -16,7 +17,7 @@ import { routing } from '../app.routing';
     FormsModule,
     routing
   ],
-  declarations: [CreateComponent, StudentsComponent, ListComponent, DetailsComponent],
+  declarations: [CreateComponent, StudentsComponent, ListComponent, DetailsComponent, UpdateComponent],
   providers: [StudentsService]
 })
 export class StudentsModule { }

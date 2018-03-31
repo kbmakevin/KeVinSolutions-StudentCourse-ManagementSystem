@@ -21,13 +21,13 @@ export class CreateComponent {
     city: 'Toronto',
     phoneNumber: '416-123-4456',
     email: 'jdoe@example.com',
-    program: 'Software Engineering Technology'
-
+    program: 'Software Engineering Technology',
+    courses: undefined
   };
   constructor(private _router: Router,
     private _studentsService: StudentsService,
     // 2018.03.30 - 11:48:52 - add alert service
-    private _alertSerice: AlertService) { }
+    private _alertService: AlertService) { }
 
   create() {
     this._studentsService
@@ -35,13 +35,13 @@ export class CreateComponent {
       .subscribe(createdStudent => {
         // 2018.03.30 - 11:50:04 - add alert service
         // keep showing the alert even after redirected to /student/details/:id
-        this._alertSerice.success(`Student (#${createdStudent.studentNumber}) successfully created`, true);
+        this._alertService.success(`Student (#${createdStudent.studentNumber}) successfully created`, true);
         // 2018.03.27 - 09:31:28 - updated route
         this._router.navigate(['/students/details'],
-          { queryParams: { 'id': createdStudent.studentNumber } }
+          { queryParams: { 'id': createdStudent._id } }
         );
       },
         // 2018.03.30 - 11:49:19 - add alert service
-        error => this._alertSerice.error(error));
+        error => this._alertService.error(error));
   }
 }

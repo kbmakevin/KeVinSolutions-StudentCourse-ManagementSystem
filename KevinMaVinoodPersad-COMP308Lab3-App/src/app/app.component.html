@@ -2,6 +2,9 @@
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a routerLink="/home" class="navbar-brand">Centennial College</a>
+        <span *ngIf='this._authService.isLoggedIn()'>
+            Logged in as {{this._authService.getStudent().firstName}} (#{{this._authService.getStudent().studentNumber}})
+        </span>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
             aria-expanded="false" aria-label="Toggle navigation">
@@ -11,17 +14,16 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item" *ngIf='this._authService.isLoggedIn()'>
-                    <a class="nav-link" routerLink='/home' routerLinkActive='active'>Home
-                        <span class="sr-only">(current)</span>
-                    </a>
+                    <a class="nav-link" routerLink='/home' routerLinkActive='active' *ngIf='this._authService.isAdmin()'>Home </a>
+                    <a class="nav-link" routerLink='/home' routerLinkActive='active' *ngIf='!this._authService.isAdmin()'>My Profile </a>
                 </li>
                 <li class="nav-item dropdown" *ngIf='this._authService.isLoggedIn()'>
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Student Management
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" routerLink='/students'>List Students</a>
-                        <a class="dropdown-item" routerLink='/students/create'>Create New Student</a>
+                        <a class="dropdown-item" routerLink='/students'>List All Students</a>
+                        <a class="dropdown-item" routerLink='/students/create' *ngIf='this._authService.isAdmin()'>Create New Student</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown" *ngIf='this._authService.isLoggedIn()'>
@@ -29,8 +31,8 @@
                         Course Management
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" routerLink='/courses'>List Courses</a>
-                        <a class="dropdown-item" routerLink='/courses/create'>Create New Course</a>
+                        <a class="dropdown-item" routerLink='/courses'>List All Courses</a>
+                        <a class="dropdown-item" routerLink='/courses/create' *ngIf='this._authService.isAdmin()'>Create New Course</a>
                     </div>
                 </li>
                 <li class="nav-item" *ngIf='!this._authService.isLoggedIn()'>

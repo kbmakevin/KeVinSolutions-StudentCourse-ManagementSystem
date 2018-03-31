@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from '../authentication/authentication.service';
 
 @Component({
   selector: 'app-students',
@@ -7,9 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StudentsComponent implements OnInit {
 
+  title: String;
   constructor() { }
 
   ngOnInit() {
+    this.title = 'Student Management';
   }
 
 }

@@ -1,4 +1,4 @@
-<div style="padding-top:25px; padding-bottom:45px">
+<div style="padding-top:25px; padding-bottom:45px" *ngIf='this._authService.isAdmin()'>
   <a [routerLink]="['create']" class="btn btn-success pull-left ">Create New Student</a>
 </div>
 
@@ -20,8 +20,9 @@
         <td>{{ stud.lastName }}</td>
         <td>{{ stud.program }}</td>
         <td>
-          <a href="#" class="btn btn-success" style="background-color:white;color:green;">Register Course</a>
-          <a [routerLink]="['details']" [queryParams]="{id: stud.studentNumber}" class="btn btn-primary pull-right" style="background-color:white;color:blue; ">Details</a>
+          <a [routerLink]="['register']" [queryParams]="{id: stud._id}" class="btn btn-success" style="background-color:white;color:green;"
+            *ngIf='this._authService.isAdmin()'>Enroll Courses</a>
+          <a [routerLink]="['details']" [queryParams]="{id: stud._id}" class="btn btn-primary pull-right" style="background-color:white;color:blue; ">View Profile</a>
         </td>
       </tr>
     </tbody>

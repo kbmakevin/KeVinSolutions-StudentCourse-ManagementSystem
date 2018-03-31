@@ -1,7 +1,7 @@
 /**
  * 
- * @file        students.server.routes.js
- * @description defines the routes for the students entity
+ * @file        courses.server.routes.js
+ * @description defines the routes for the courses entity
  * @author      Kevin Ma, Vinood Persad
  * @date        2018.03.21
  * 
@@ -21,11 +21,23 @@ router.post('/', (req, res, next) => {
 });
 
 router.get('/', (req, res, next) => {
-    coursesController.GetCourse(req, res, next);
+    coursesController.GetCourses(req, res, next);
 });
 
 router.get('/delete/:code', (req, res, next) => {
     coursesController.DeleteCourse(req, res, next);
+});
+
+router.get('/:id', (req, res, next) => {
+    coursesController.GetOneCourse(req, res, next);
+});
+
+router.post('/removestudent', (req, res, next) => {
+    coursesController.RemoveStudentFromCourse(req, res, next);
+});
+
+router.post('/updatecourse', (req, res, next) => {
+    coursesController.UpdateCourse(req, res, next);
 });
 
 
