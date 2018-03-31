@@ -1,7 +1,7 @@
 /**
  * 
- * @file        students.server.controller.js
- * @description this controller handles the CRUD operations for a Student Model
+ * @file        courses.server.controller.js
+ * @description this controller handles the CRUD operations for a Course Entity
  * @author      Kevin Ma, Vinood Persad
  * @date        2018.03.21
  * 
@@ -15,7 +15,7 @@ const Course = require('../models/courses.server.model');
 // Course CRUD FUNCTIONS =======================================================
 
 // Get list of courses
-module.exports.GetCourses = function(req, res, next) {
+module.exports.GetCourses = function (req, res, next) {
     Course.find((err, courses) => {
         if (err) {
             return res.status(400).send({
@@ -44,28 +44,28 @@ module.exports.CreateCourse = function (req, res, next) {
     })
 }
 
- module.exports.DeleteCourse = function (req, res, next) {
-     let code = req.params.code;
+module.exports.DeleteCourse = function (req, res, next) {
+    let code = req.params.code;
 
-     Course.remove({ courseCode: code }, (err) => {
-         if (err) {
-             console.error(err);
-             res.end(err);
-         } else {
-             res.status(200).json(code);
-         }
-     });
+    Course.remove({ courseCode: code }, (err) => {
+        if (err) {
+            console.error(err);
+            res.end(err);
+        } else {
+            res.status(200).json(code);
+        }
+    });
 }
 
-module.exports.GetOneCourse = function(req, res, next) {
+module.exports.GetOneCourse = function (req, res, next) {
     let id = req.params.id;
     console.log("inside course controller " + id);
 
-    Course.findOne({_id:id})
-    .populate('students')
-    .exec((err, course) => {
-        res.json(course);
-    })
+    Course.findOne({ _id: id })
+        .populate('students')
+        .exec((err, course) => {
+            res.json(course);
+        })
 }
 
 function getErrorMessage(err) {
@@ -79,7 +79,7 @@ function getErrorMessage(err) {
     }
 };
 
-module.exports.RemoveStudentFromCourse = function(req, res, next) {
+module.exports.RemoveStudentFromCourse = function (req, res, next) {
     let c_Id = req.body.cId;
     let s_Id = req.body.stdId;
 
@@ -107,10 +107,10 @@ module.exports.RemoveStudentFromCourse = function(req, res, next) {
     );
 };
 
-module.exports.UpdateCourse = function(req, res, next) {
+module.exports.UpdateCourse = function (req, res, next) {
 
-    Course.findByIdAndUpdate(req.body._id, req.body,(err, c) => {
-        if(err) {
+    Course.findByIdAndUpdate(req.body._id, req.body, (err, c) => {
+        if (err) {
             return res.status(400).send({
                 message: getErrorMessage(err)
             })

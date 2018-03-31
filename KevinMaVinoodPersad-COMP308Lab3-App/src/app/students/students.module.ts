@@ -7,30 +7,17 @@ import { StudentsComponent } from './students.component';
 import { Routes, RouterModule } from '@angular/router';
 import { ListComponent } from './list/list.component';
 import { DetailsComponent } from './details/details.component';
-import { RegisterComponent } from './register/register.component';
 import { StudentsService } from './students.service';
-
-const studentRoutes: Routes = [
-  {
-    path: 'students',
-    component: StudentsComponent,
-    children: [
-      { path: '', component: ListComponent },
-      { path: 'create', component: CreateComponent },
-      { path: 'details', component: DetailsComponent },
-      { path: 'register', component: RegisterComponent },
-    ],
-  }
-
-];
+import { routing } from '../app.routing';
+import { UpdateComponent } from './update/update.component';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    RouterModule.forChild(studentRoutes),
+    routing
   ],
-  declarations: [CreateComponent, StudentsComponent, ListComponent, DetailsComponent, RegisterComponent],
+  declarations: [CreateComponent, StudentsComponent, ListComponent, DetailsComponent, UpdateComponent],
   providers: [StudentsService]
 })
 export class StudentsModule { }

@@ -1,7 +1,8 @@
-import 'rxjs/Rx';
+// import 'rxjs/Rx';
 import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
 import { Http, Headers, Request, RequestMethod, Response } from '@angular/http';
+import { Student } from '../interfaces/student';
 
 
 @Injectable()
@@ -27,27 +28,16 @@ export class StudentsService {
 
   getStudent(id: any): Observable<any> {
     return this._http
-    .get(this._baseURL + '/' + id)
-    .map((res: Response) =>   res.json())
-    .catch(this.handleError);
-
-  }
-
-  registerCourse(details: any): Observable<any> {
-    return this._http
-      .post(this._baseURL + '/registercourse',details)
+      .get(this._baseURL + '/' + id)
       .map((res: Response) => res.json())
+      // .catch((err: any) => console.log(err));
       .catch(this.handleError);
   }
 
-  dropCourse(s_id: any, c_id: any): Observable<any> {
-    let details = {
-      stdNum: s_id,
-      id: c_id
-    }
+  updateStudent(id: String, student: Student): Observable<any> {
     return this._http
-      .post(this._baseURL +'/removecourse', details)
-      .map((res: Response) => res.json())
+      .put(this._baseURL + '/' + id, student)
+      .map(res => res.json())
       .catch(this.handleError);
   }
 

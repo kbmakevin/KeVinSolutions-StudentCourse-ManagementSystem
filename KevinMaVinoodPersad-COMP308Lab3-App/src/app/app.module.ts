@@ -6,28 +6,41 @@ import { StudentsModule } from './students/students.module';
 import { CoursesModule } from './courses/courses.module';
 
 import { AppComponent } from './app.component';
-import { HomeModule } from './home/home.module';
-
-const appRoutes: Routes = [
-  {
-    path: '', redirectTo: 'home', pathMatch: 'full'
-  },
-];
+import { LoginComponent } from './login/login.component';
+import { HomeComponent } from './home/home.component';
+import { AuthenticationService } from './authentication/authentication.service';
+import { FormsModule } from '@angular/forms';
+import { AlertComponent } from './alert/alert.component';
+import { AlertService } from './alert/alert.service';
+import { routing } from '../app/app.routing';
+import { AuthGuard } from './authentication/auth.guard';
+import { RoleGuard } from './authentication/role.guard';
+import { StudentRestrictionGuard } from './authentication/student-restriction.guard';
+import { PersonalGuard } from './authentication/personal.guard';
 
 @NgModule({
   declarations: [
     AppComponent,
-    
+    LoginComponent,
+    HomeComponent,
+    AlertComponent,
   ],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(appRoutes),
+    FormsModule,
     HttpModule,
-    HomeModule,
     StudentsModule,
-    CoursesModule
+    CoursesModule,
+    routing
   ],
-  providers: [],
+  providers: [
+    AuthGuard,
+    RoleGuard,
+    PersonalGuard,
+    StudentRestrictionGuard,
+    AuthenticationService,
+    AlertService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

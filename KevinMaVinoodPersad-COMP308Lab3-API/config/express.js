@@ -14,6 +14,8 @@
 // installed node modules
 const express = require('express');
 const bodyParser = require('body-parser');
+// 2018.03.27 - 00:15:19 - added passport
+const passport = require('passport');
 
 // custom modules
 // const config = require('./config');
@@ -28,6 +30,9 @@ const app = express();
 // configure the session middleware ------------------------------------------------------------------------------------------
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+// 2018.03.27 - 00:14:41- added passport
+app.use(passport.initialize()); //bootstrapping the Passport module
+app.use(passport.session()); //keep track of your user's session
 
 // load the routing files
 app.use('/api/students', studentRoutes);

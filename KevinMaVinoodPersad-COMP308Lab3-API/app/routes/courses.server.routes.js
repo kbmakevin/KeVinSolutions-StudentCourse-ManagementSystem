@@ -1,7 +1,7 @@
 /**
  * 
- * @file        students.server.routes.js
- * @description defines the routes for the students entity
+ * @file        courses.server.routes.js
+ * @description defines the routes for the courses entity
  * @author      Kevin Ma, Vinood Persad
  * @date        2018.03.21
  * 
