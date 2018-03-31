@@ -89,54 +89,25 @@ module.exports.GetStudentDetails = function (req, res, next) {
 // Update student
 module.exports.UpdateStudent = function (req, res, next) {
 
-    // 2018.03.31 - 17:36:02 - can't use this because the pre-findOneAndUpdate function not working properly...won't hash passwords after update
-    // Student.findByIdAndUpdate(req.params.id, req.body, (err, s) => {
-    //     // console.log("inside controller " + req.params.id);
-    //     if (err) {
-    //         return res.status(400).send({
-    //             message: getErrorMessage(err)
-    //         })
-    //     } else {
-    //         res.json(s);
-    //     }
-    // })
+    // 2018.03.31 - 18:46:18 - middleware doesnt work for updates, and can't use middlware for presave since server thinks we are creating duplicate student with same studentNumber
+    let id = req.params.id;
 
-    let s;
-
-    // let student = Student(req.body);
-    // student.provider = 'local';
-    console.log('Updating student:');
-    // console.log(student);
-
-    Student.find(
-        { _id: req.params.id },
-        (err, student) => {
-            if (err) {
-                return res.status(400).send({
-                    message: getErrorMessage(err)
-                });
-            } else {
-                s = student;
-                console.log(`student: ${s}`);
-                console.log(`in updatestudent of controller. the student id is: ${s._id}`);
-                // res.status(200).json(students);
-            }
-        });
+    let updatedStudent = new Student(req.body);
+    updatedStudent.provider = 'local';
+    updatedStudent._id = id;
+    updatedStudent.salt = updatedStudent.generateSalt();
+    updatedStudent.password = updatedStudent.hashPassword(updatedStudent.password);
 
 
-    // s.save(err => {
-    //     if (err) {
-    //         console.log(err);
-    //         return res.status(400).send({
-    //             message: getErrorMessage(err)
-    //         });
-    //     } else {
-    //         res.status(200).json(student);
-    //     }
-    // })
+    Student.update({ _id: id }, updatedStudent, (err) => {
+        if (err) {
+            console.error(err);
+            res.end(err);
+        } else {
+            res.status(200).json(updatedStudent);
+        }
+    });
 }
-
-
 
 // Delete student
 module.exports.DeleteStudent = function (req, res, next) {

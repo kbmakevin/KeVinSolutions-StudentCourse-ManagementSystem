@@ -15,7 +15,6 @@ import { AlertService } from './alert/alert.service';
 import { routing } from '../app/app.routing';
 import { AuthGuard } from './authentication/auth.guard';
 import { RoleGuard } from './authentication/role.guard';
-import { StudentRestrictionGuard } from './authentication/student-restriction.guard';
 import { PersonalGuard } from './authentication/personal.guard';
 
 @NgModule({
@@ -37,7 +36,6 @@ import { PersonalGuard } from './authentication/personal.guard';
     AuthGuard,
     RoleGuard,
     PersonalGuard,
-    StudentRestrictionGuard,
     AuthenticationService,
     AlertService
   ],
