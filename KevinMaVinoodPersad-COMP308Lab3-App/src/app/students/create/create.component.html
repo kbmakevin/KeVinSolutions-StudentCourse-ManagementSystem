@@ -1,12 +1,14 @@
 <h1>New Student</h1>
-<form (ngSubmit)="create()">
+<!-- <form (ngSubmit)="create()"> -->
+<form #f='ngForm' [ngClass]="{'was-validated': f.submitted}" (ngSubmit)="f.form.valid && create()" novalidate>
   <!-- Student Number -->
   <div class="form-group row">
     <div class="col-4 text-right">
       <label>Student Number:</label>
     </div>
     <div class="col-md-5">
-      <input type="number" class="form-control" required [(ngModel)]="student.studentNumber" name="studentNumber">
+      <input type="number" class="form-control" required [(ngModel)]="student.studentNumber" name="studentNumber" min="300000000">
+      <div class="invalid-feedback text-left">Student Number must be an integer greater than or equal to 300000000</div>
     </div>
   </div>
 
@@ -17,6 +19,7 @@
     </div>
     <div class="col-md-5">
       <input type="password" class="form-control" required [(ngModel)]="student.password" name="password" />
+      <div class="invalid-feedback text-left">Password is required!</div>
     </div>
   </div>
 
@@ -27,6 +30,7 @@
     </div>
     <div class="col-md-5">
       <input type="text" class="form-control" required [(ngModel)]="student.firstName" name="firstName" />
+      <div class="invalid-feedback text-left">First name is required!</div>
     </div>
   </div>
 
@@ -37,6 +41,7 @@
     </div>
     <div class="col-md-5">
       <input type="text" class="form-control" required [(ngModel)]="student.lastName" name="lastName" />
+      <div class="invalid-feedback text-left">Last name is required!</div>
     </div>
   </div>
 
@@ -47,6 +52,7 @@
     </div>
     <div class="col-md-5">
       <input type="text" class="form-control" required [(ngModel)]="student.address" name="address" />
+      <div class="invalid-feedback text-left">Address is required!</div>
     </div>
   </div>
 
@@ -57,6 +63,7 @@
     </div>
     <div class="col-md-5">
       <input type="text" class="form-control" required [(ngModel)]="student.city" name="city" />
+      <div class="invalid-feedback text-left">City is required!</div>
     </div>
   </div>
 
@@ -67,6 +74,7 @@
     </div>
     <div class="col-md-5">
       <input type="text" class="form-control" required [(ngModel)]="student.phoneNumber" name="phoneNumber" />
+      <div class="invalid-feedback text-left">Phone number is required!</div>
     </div>
   </div>
 
@@ -77,6 +85,7 @@
     </div>
     <div class="col-md-5">
       <input type="email" class="form-control" required [(ngModel)]="student.email" name="email" />
+      <div class="invalid-feedback text-left">Email is required!</div>
     </div>
   </div>
 
@@ -87,13 +96,14 @@
     </div>
     <div class="col-md-5">
       <input type="text" class="form-control" required [(ngModel)]="student.program" name="program">
+      <div class="invalid-feedback text-left">Program is required!</div>
     </div>
   </div>
 
   <!-- Buttons -->
   <button type="submit" class="btn btn-outline-success">
     <i class="fa fa-check-square-o"></i> Create</button>
-  <a href="/surveys" class="btn btn-outline-warning">
+  <a routerLink='/students' class="btn btn-outline-warning">
     <i class="fa fa-undo"> Cancel</i>
   </a>
 

@@ -12,7 +12,8 @@ export class AuthenticationService {
 
   isLoggedIn(): boolean {
     // return this.student;
-    return sessionStorage.getItem('currentUser') !== undefined;
+    // console.log(`inside auth service checking if loggedin: ${sessionStorage.getItem('currentStudent') !== null}`);
+    return sessionStorage.getItem('currentStudent') !== null;
   }
 
   login(credentials: Credentials): Observable<any> {

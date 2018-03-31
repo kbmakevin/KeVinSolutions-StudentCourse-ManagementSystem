@@ -11,6 +11,8 @@ import { Subject } from 'rxjs/Subject';
 @Injectable()
 export class AlertService {
 
+  // a subject is a special type of observer that allows its values to be multicasted to many Observers
+  // Observers are unicast (each observer owns an independent execution of the Observer)
   private _subject = new Subject<any>();
   private _keepAfterNavigationChange = false;
 

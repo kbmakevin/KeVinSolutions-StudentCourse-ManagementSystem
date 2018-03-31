@@ -12,12 +12,8 @@ import { AuthenticationService } from './authentication/authentication.service';
 import { FormsModule } from '@angular/forms';
 import { AlertComponent } from './alert/alert.component';
 import { AlertService } from './alert/alert.service';
-
-const appRoutes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: 'login', component: LoginComponent },
-  { path: 'home', component: HomeComponent },
-];
+import { routing } from '../app/app.routing';
+import { AuthGuard } from './authentication/auth.guard';
 
 @NgModule({
   declarations: [
@@ -28,13 +24,17 @@ const appRoutes: Routes = [
   ],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(appRoutes),
     FormsModule,
     HttpModule,
     StudentsModule,
-    CoursesModule
+    CoursesModule,
+    routing
   ],
-  providers: [AuthenticationService, AlertService],
+  providers: [
+    AuthGuard,
+    AuthenticationService,
+    AlertService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

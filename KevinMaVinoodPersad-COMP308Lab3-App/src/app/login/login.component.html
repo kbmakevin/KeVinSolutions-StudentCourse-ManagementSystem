@@ -1,22 +1,25 @@
 <h1>Login</h1>
-<form (ngSubmit)="login()">
+<!-- # is variable declaration in ng -->
+<form #f='ngForm' [ngClass]="{'was-validated': f.submitted}" (ngSubmit)="f.form.valid && login()" novalidate>
   <!-- Student Number -->
-  <div class=" form-group row ">
+  <div class=" form-group row">
     <div class="col-4 text-right ">
       <label>Student Number:</label>
     </div>
     <div class="col-md-5 ">
       <input type="number " class="form-control " required [(ngModel)]="credentials.studentNumber" name="studentNumber">
+      <div class="invalid-feedback text-left">Student Number is required!</div>
     </div>
   </div>
 
   <!-- Password -->
-  <div class="form-group row ">
+  <div class="form-group row has-danger">
     <div class="col-4 text-right ">
       <label>Password:</label>
     </div>
     <div class="col-md-5 ">
       <input type="password " class="form-control " required [(ngModel)]="credentials.password" name="password" />
+      <div class="invalid-feedback text-left">Password is required!</div>
     </div>
   </div>
 

@@ -7,27 +7,15 @@ import { CoursesComponent } from './courses.component';
 import { ListCoursesComponent } from './list/listcourses.component';
 import { CreateCourseComponent } from './create/createcourse.component';
 import { CoursesService } from './courses.service';
+import { routing } from '../app.routing';
 
-
-const coursesRoutes: Routes = [
-    {
-      path: 'courses',
-      component: CoursesComponent,
-      children: [
-        { path: '', component: ListCoursesComponent },
-        { path: 'create', component: CreateCourseComponent }
-      ]
-    }
-  
-  ];
-
-  @NgModule({
-    imports: [
-      CommonModule,
-      FormsModule,
-      RouterModule.forChild(coursesRoutes),
-    ],
-    declarations: [CoursesComponent, ListCoursesComponent, CreateCourseComponent],
-    providers: [CoursesService]
-  })
-  export class CoursesModule { }
+@NgModule({
+  imports: [
+    CommonModule,
+    FormsModule,
+    routing
+  ],
+  declarations: [CoursesComponent, ListCoursesComponent, CreateCourseComponent],
+  providers: [CoursesService]
+})
+export class CoursesModule { }

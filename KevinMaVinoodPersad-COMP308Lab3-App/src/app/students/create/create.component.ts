@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { StudentsService } from '../students.service';
 import { Student } from '../../interfaces/student';
+import { AlertService } from '../../alert/alert.service';
 
 @Component({
   selector: 'app-create',
@@ -23,19 +24,24 @@ export class CreateComponent {
     program: 'Software Engineering Technology'
 
   };
-  errorMessage: string;
-
   constructor(private _router: Router,
-    private _studentsService: StudentsService) { }
+    private _studentsService: StudentsService,
+    // 2018.03.30 - 11:48:52 - add alert service
+    private _alertSerice: AlertService) { }
 
   create() {
     this._studentsService
       .create(this.student)
-      .subscribe(createdStudent =>
+      .subscribe(createdStudent => {
+        // 2018.03.30 - 11:50:04 - add alert service
+        // keep showing the alert even after redirected to /student/details/:id
+        this._alertSerice.success(`Student (#${createdStudent.studentNumber}) successfully created`, true);
         // 2018.03.27 - 09:31:28 - updated route
         this._router.navigate(['/students/details'],
           { queryParams: { 'id': createdStudent.studentNumber } }
-        ),
-        error => this.errorMessage = error);
+        );
+      },
+        // 2018.03.30 - 11:49:19 - add alert service
+        error => this._alertSerice.error(error));
   }
 }

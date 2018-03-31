@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Student } from '../interfaces/student';
-import { AuthenticationService } from '../authentication/authentication.service';
 
 @Component({
   selector: 'app-home',
@@ -9,17 +8,11 @@ import { AuthenticationService } from '../authentication/authentication.service'
 })
 export class HomeComponent {
 
-  currentUser: any = {
-    firstName: 'Kevin'
-  };
+  currentUser: Student;
 
   title = 'home component';
-  constructor(private _authService: AuthenticationService) {
+  constructor() {
     // 2018.03.28 - 19:54:04 - even tho we receive from API as JSON obj, need to parse again because sessionStorage stores data as strings
     this.currentUser = JSON.parse(sessionStorage.getItem('currentStudent'));
-  }
-
-  logout() {
-    this._authService.logout();
   }
 }

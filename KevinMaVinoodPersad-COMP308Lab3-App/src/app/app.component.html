@@ -1,13 +1,65 @@
-<div class="container text-center">
-    <div class="jumbotron">
-        <h1>
-            Welcome to {{ title }}!
-        </h1>
-        <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-        <br>
-        <a [routerLink]="['home']">Go Home</a>
+<div class="container-fluid text-center">
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a routerLink="/home" class="navbar-brand">Centennial College</a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item" *ngIf='this._authService.isLoggedIn()'>
+                    <a class="nav-link" routerLink='/home' routerLinkActive='active'>Home
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+                <li class="nav-item dropdown" *ngIf='this._authService.isLoggedIn()'>
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Student Management
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" routerLink='/students'>List Students</a>
+                        <a class="dropdown-item" routerLink='/students/create'>Create New Student</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown" *ngIf='this._authService.isLoggedIn()'>
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Course Management
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" routerLink='/courses'>List Courses</a>
+                        <a class="dropdown-item" routerLink='/courses/create'>Create New Course</a>
+                    </div>
+                </li>
+                <li class="nav-item" *ngIf='!this._authService.isLoggedIn()'>
+                    <a class="nav-link" routerLink='/login' routerLinkActive='active'>Login</a>
+                </li>
+                <li class="nav-item" *ngIf='this._authService.isLoggedIn()'>
+                    <a class="nav-link" routerLink='/login'>Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="jumbotron jumbotron-fluid" style="background-color:#555455;">
+        <!-- <h1> -->
+        <!-- {{ title }} -->
+        <!-- </h1> -->
+        <!-- <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg=="> -->
+        <!-- <img alt="Enterprise Resource Planning Banner" src="../assets/erp-banner.png" height="100%;"> -->
+        <img alt="Centennial College Banner" src="../assets/cencol_banner.jpeg">
+        <!-- <br> -->
+        <!-- <a [routerLink]="['home']">Go Home</a>
+        <a [routerLink]="['students']" *ngIf="this._authService.isLoggedIn()">Student Management</a> -->
     </div>
-    <div class="panel panel-primary">
-        <router-outlet></router-outlet>
+    <div class="container">
+        <div class="panel panel-primary">
+            <!-- allows displaying alert msgs from anywhere in the system -->
+            <app-alert></app-alert>
+            <!-- displays contents of each view based on the current route -->
+            <router-outlet></router-outlet>
+        </div>
     </div>
 </div>

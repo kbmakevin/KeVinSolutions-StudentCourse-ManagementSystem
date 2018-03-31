@@ -1,12 +1,54 @@
-<h1>This is home module template</h1>
-
+<!-- <h1>This is home module template</h1>
 <a [routerLink]="['/students']">Students</a>
-<a [routerLink]="['/courses']">Courses</a>
+<a [routerLink]="['/courses']">Courses</a> -->
 
 <!-- <div class="col-md-6 col-md-offset-3"> -->
-<h1>Hi {{currentUser.firstName}}!</h1>
+<!-- <h1>Hi {{currentUser.firstName}}!</h1>
 <p>You're logged in with Angular 5!!</p>
 <p>
-    <a [routerLink]="['/login']" class="btn btn-outline-danger" (click)="logout()">Logout</a>
-</p>
+    <a [routerLink]="['/login']" class="btn btn-outline-danger">Logout</a>
+</p> -->
+
+<div class="container">
+    <div class="row">
+        <div class="col-md">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Student Managment</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">CRUD functionalities for Centennial College Students</h6>
+                    <img class="card-img-top" src="../../assets/student-management.png" alt="Student Management System Picture">
+                    <p class="card-text">This component of the system allows the administrator to list all students, create new students, view
+                        and update each student's details, and delete students.</p>
+                    <br>
+                    <a routerLink='/students' class="card-link btn btn-primary">Click to Continue</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md">
+
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Course Managment</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">CRUD functionalities for Centennial College Courses</h6>
+                    <img class="card-img-top" src="../../assets/course-management.png" alt="Course Management System Picture">
+                    <p class="card-text">This component of the system allows the administrator to list all courses, create new courses, view and
+                        update each course's details, and delete courses. In addition, the administrator is able to enroll/drop
+                        students from each of the courses.</p>
+                    <a routerLink='/courses' class="card-link btn btn-primary">Click to Continue</a>
+                </div>
+            </div>
+        </div>
+        <!-- <a href="#" class="w-50 h-100 border btn btn-primary">
+            <div>
+                <span class="align-middle">
+                    column2
+                </span>
+            </div>
+        </a> -->
+    </div>
+    <!-- end row -->
+
+
+</div>
+
 <!-- </div> -->
