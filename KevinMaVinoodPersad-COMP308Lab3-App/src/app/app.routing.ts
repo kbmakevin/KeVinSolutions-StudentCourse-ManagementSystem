@@ -12,6 +12,8 @@ import { AuthGuard } from './authentication/auth.guard';
 import { RoleGuard } from './authentication/role.guard';
 import { UpdateComponent } from './students/update/update.component';
 import { PersonalGuard } from './authentication/personal.guard';
+import { CourseDetailComponent } from './courses/details/coursedetail.component';
+import { UpdateCourseComponent } from './courses/update-course/update-course.component';
 
 // 2018.03.30 - 12:34:17 - created app.routing for all routes in application
 
@@ -38,7 +40,9 @@ const appRoutes: Routes = [
         canActivate: [AuthGuard],
         children: [
             { path: '', component: ListCoursesComponent },
-            { path: 'create', component: CreateCourseComponent }
+            { path: 'create', component: CreateCourseComponent, canActivate: [RoleGuard] },
+            { path: 'update', component: UpdateCourseComponent, canActivate: [RoleGuard] },
+            { path: 'details', component: CourseDetailComponent },
         ]
     },
     // { path: 'profile', redirectTo: 'students/details' },

@@ -45,21 +45,21 @@ module.exports.CreateCourse = function (req, res, next) {
 }
 
 module.exports.DeleteCourse = function (req, res, next) {
-    let code = req.params.code;
+    let id = req.params.id;
 
-    Course.remove({ courseCode: code }, (err) => {
+    Course.remove({ _id: id }, (err) => {
         if (err) {
             console.error(err);
             res.end(err);
         } else {
-            res.status(200).json(code);
+            res.status(200).json(id);
         }
     });
 }
 
 module.exports.GetOneCourse = function (req, res, next) {
     let id = req.params.id;
-    console.log("inside course controller " + id);
+    // console.log("inside course controller " + id);
 
     Course.findOne({ _id: id })
         .populate('students')
@@ -69,14 +69,28 @@ module.exports.GetOneCourse = function (req, res, next) {
 }
 
 function getErrorMessage(err) {
-    if (err.errors) {
-        for (let errName in err.errors) {
-            if (err.errors[errName].message) return err.errors[errName].
-                message;
+    let message = '';
+    if (err.code) {
+        switch (err.code) {
+            case 11000:
+            case 11001:
+                message = 'Course code already exists';
+                break;
+            default:
+                message = 'Something went wrong';
         }
     } else {
-        return 'Unknown server error';
+        // mongoose validation error
+        if (err.errors) {
+            for (let errName in err.errors) {
+                if (err.errors[errName].message)
+                    message = err.errors[errName].message;
+            }
+        } else {
+            message = 'Unknown server error';
+        }
     }
+    return message;
 };
 
 module.exports.RemoveStudentFromCourse = function (req, res, next) {

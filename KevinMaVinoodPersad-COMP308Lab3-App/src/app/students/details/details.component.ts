@@ -2,7 +2,6 @@ import { ActivatedRoute } from '@angular/router';
 import { StudentsService } from '../students.service';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Student } from '../../interfaces/student';
-import { Course } from '../../interfaces/course';
 import { AuthenticationService } from '../../authentication/authentication.service';
 
 
@@ -15,8 +14,6 @@ import { AuthenticationService } from '../../authentication/authentication.servi
 export class DetailsComponent implements OnInit {
     studentId: string;
     student: Student;
-    registered: Boolean = false;
-
     isMyProfile: Boolean;
 
     constructor(
@@ -32,9 +29,6 @@ export class DetailsComponent implements OnInit {
             .getStudent(this.studentId)
             .subscribe((res) => {
                 this.student = res;
-                if (this.student.courses.length > 0) {
-                    this.registered = true;
-                }
                 if (this._authService.isAdmin()) {
                     // 2018.03.31 - 20:43:40 - every profile belongs to admin :)
                     this.isMyProfile = true;
@@ -44,15 +38,5 @@ export class DetailsComponent implements OnInit {
                 }
             });
 
-        console.log(`This student is registered: ${this.registered}`);
     }
-
-    // dropCourse(c_id: string) {
-    //     console.log("Inside drop course in student module");
-    //     this._studentsService
-    //         .dropCourse(this.studentId, c_id)
-    //         .subscribe((res) => {
-    //             this.ngOnInit();
-    //         });
-    // }
 }

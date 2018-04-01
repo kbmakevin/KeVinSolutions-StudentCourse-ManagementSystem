@@ -33,7 +33,7 @@ export class ListComponent implements OnInit {
       .deleteStudent(id)
       .subscribe(deletedStudent => {
         this._alertService.success(`Student (#${studentNumber}) successfully deleted`, true);
-        location.reload();
+        this.ngOnInit();
       },
         error => this._alertService.error(error));
   }

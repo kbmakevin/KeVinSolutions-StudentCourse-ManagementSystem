@@ -1,125 +1,84 @@
-<div style="padding-top:25px; padding-bottom:45px" >
+<!-- <div style="padding-top:25px; padding-bottom:45px" >
     <a [routerLink]="['create']" class="btn btn-success pull-left ">Create Course</a>
+</div> -->
+
+<div style="padding-top:25px; padding-bottom:45px" *ngIf='this._authService.isAdmin()'>
+    <a [routerLink]="['create']" class="btn btn-outline-success" [ngClass]="{'pull-left': course.length}">Create New Course</a>
 </div>
 
-<div style="margin-top:15px">
-    <table class="table">
-      <thead class="thead-dark">
-        <tr>
-          <th scope="col">Course Code</th>
-          <th scope="col">Course Name</th>
-          <th scope="col">Section</th>
-          <th scope="col">Semester</th>
-          <th scope="col"></th>
-        </tr>
-      </thead>
-      <tbody>
-          <ng-container *ngFor="let c of course">
-              <ng-container *ngIf="c.courseCode == editableCourse.courseCode">
-                    <tr  class="form-group">
-                        <td scope="row"><input type="text" class="form-control col-xs-2" name="code" [(ngModel)]="editableCourse.courseCode" value="{{editableCourse.courseCode}}" /></td>
-                        <td><input type="text" class="form-control" name="coursename" [(ngModel)]="editableCourse.courseName" value="{{editableCourse.courseName}}"/></td>
-                        <td><input type="text" class="form-control col-xs-2" name="section" [(ngModel)]="editableCourse.section" value="{{editableCourse.section}}"/></td>
-                        <td> <input type="text" class="form-control col-xs-2" name="semester" [(ngModel)]="editableCourse.semester" value="{{editableCourse.semester}}"/></td>
-                        <td>
-                          <div class="pull-right">
-                              <a (click)="saveChanges()" class="btn btn-success" style="background-color:white;color:green; ">Save</a>
-                              <a (click)="cancelEdit()" class="btn btn-warning" style="background-color:white;color:orange; ">Cancel</a>
-                          </div>
-                        </td>
-                    </tr>
-              </ng-container>
-              <!--<ng-container *ngIf="c.courseCode != code">-->
-                  <tr *ngIf="c.courseCode != editableCourse.courseCode">
-                      <th scope="row">{{ c.courseCode }}</th>
-                      <td>{{ c.courseName }}</td>
-                      <td>{{ c.section }}</td>
-                      <td>{{ c.semester }}</td>
-                      <td>
-                        <div class="">
-                            <a (click)="editCourse(c)" class="btn btn-success" style="background-color:white;color:green; ">Edit</a>
-                            <a (click)="deleteCourse(c.courseCode)" class="btn btn-danger" style="background-color:white;color:red; ">Delete</a>
-                            <a [routerLink]="['coursedetails']" [queryParams]="{id: c._id}" class="btn btn-primary" style="background-color:white;color:blue;">Details</a>
-                        </div>
-            
-                      </td>
-                    </tr>
-              <!--</ng-container>-->
-          </ng-container>
+<div *ngIf="!course.length && this._authService.isAdmin()">
+    <p>
+        There are currently no courses offered at Centennial College.
+        <br> Please feel free to create a new course by clicking the button above :) !
+    </p>
+</div>
 
+<div *ngIf='!this._authService.isAdmin()'>
+    <h4>Currently Enrolled In:</h4>
+    <p *ngIf='!this._authService.getStudent().courses.length'>
+        You are currently enrolled in 0 classes.
+        <br>Please feel free to enroll in some of the available courses below by
+        <br>clicking the View Details button and then clicking Enroll In This Class on the next page :) !
+    </p>
 
-
-
-
-        <!--<ng-container *ngIf="editable">
-            <tr >
-                This is where a form row will be displayed ....
-                <a (click)="editCourse(c.courseCode)" class="btn btn-success" style="background-color:white;color:green; ">Edit</a>
-            </tr>
-        </ng-container>
-        <ng-container *ngIf="noEdit">
-            <tr *ngFor="let c of course">
-                <th scope="row">{{ c.courseCode }}</th>
-                <td>{{ c.courseName }}</td>
-                <td>{{ c.section }}</td>
-                <td>{{ c.semester }}</td>
-                <td>
-                  <div class="pull-right">
-                      <a (click)="editCourse(c.courseCode)" class="btn btn-success" style="background-color:white;color:green; ">Edit</a>
-                      <a (click)="deleteCourse(c.courseCode)" class="btn btn-danger" style="background-color:white;color:red; ">Delete</a>
-                      <a [routerLink]="['coursedetails']" [queryParams]="{id: c._id}" class="btn btn-primary" style="background-color:white;color:blue;">Details</a>
-                  </div>
-      
-                </td>
-              </tr>
-        </ng-container>-->
-
-
-        <!--<ng-template *ngFor="let c of course">
-            <ng-template *ngIf="editable else noEdit">
-              <tr>
-                  This is where a form row will be displayed ....
-              </tr>
-                
-            </ng-template>
-            <ng-template #noEdit>
+    <div style="margin-top:15px" *ngIf="this._authService.getStudent().courses.length">
+        <table class="table">
+            <thead class="thead-dark">
                 <tr>
+                    <th scope="col">Course Code</th>
+                    <th scope="col">Course Name</th>
+                    <th scope="col">Section</th>
+                    <th scope="col">Semester</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let c of this._authService.getStudent().courses">
                     <th scope="row">{{ c.courseCode }}</th>
                     <td>{{ c.courseName }}</td>
                     <td>{{ c.section }}</td>
                     <td>{{ c.semester }}</td>
                     <td>
-                      <div class="pull-right">
-                          <a [routerLink]="[]" class="btn btn-success" style="background-color:white;color:green;">Edit</a>
-                          <a (click)="editCourse(c.courseCode)" class="btn btn-success" style="background-color:white;color:green; ">Edit</a>
-                          <a (click)="deleteCourse(c.courseCode)" class="btn btn-danger" style="background-color:white;color:red; ">Delete</a>
-                          <a [routerLink]="['coursedetails']" [queryParams]="{id: c._id}" class="btn btn-primary" style="background-color:white;color:blue;">Details</a>
-                      </div>
-          
+                        <a [routerLink]="['details']" [queryParams]="{id: c._id}" class="btn btn-outline-primary" [ngClass]="{'pull-left':this._authService.isAdmin()}">View Details</a>
+                        <a (click)="delete(c._id, c.courseCode)" class="btn btn-outline-danger" *ngIf='this._authService.isAdmin()'>Delete Course</a>
                     </td>
-                  </tr>
-            </ng-template>
-        </ng-template>-->
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- end div containing table courses the authenticated student is enrolled in -->
+</div>
 
+<div *ngIf="course.length">
+    <h4>Available Courses</h4>
 
-
-          <!--><tr *ngFor="let c of course">
-          <th scope="row">{{ c.courseCode }}</th>
-          <td>{{ c.courseName }}</td>
-          <td>{{ c.section }}</td>
-          <td>{{ c.semester }}</td>
-          <td>
-            <div class="pull-right">
-                <a [routerLink]="[]" class="btn btn-success" style="background-color:white;color:green;">Edit</a>
-                <a (click)="editCourse(c.courseCode)" class="btn btn-success" style="background-color:white;color:green; ">Edit</a>
-                <a (click)="deleteCourse(c.courseCode)" class="btn btn-danger" style="background-color:white;color:red; ">Delete</a>
-                <a [routerLink]="['coursedetails']" [queryParams]="{id: c._id}" class="btn btn-primary" style="background-color:white;color:blue;">Details</a>
-            </div>
-
-          </td>
-        </tr>-->
-      </tbody>
-    </table>
-  </div>
-  
-  
+    <!-- ONLY DISPLAY COURSES BELOW WHICH THE STUDENT IS NOT ALREADY ENROLLED IN! -->
+    <div style=" margin-top:15px " *ngIf="course.length ">
+        <table class="table ">
+            <thead class="thead-dark ">
+                <tr>
+                    <th scope="col ">Course Code</th>
+                    <th scope="col ">Course Name</th>
+                    <th scope="col ">Section</th>
+                    <th scope="col ">Semester</th>
+                    <th scope="col "></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let c of course ">
+                    <th scope="row ">{{ c.courseCode }}</th>
+                    <td>{{ c.courseName }}</td>
+                    <td>{{ c.section }}</td>
+                    <td>{{ c.semester }}</td>
+                    <td>
+                        <a [routerLink]="[ 'details'] " [queryParams]="{id: c._id} " class="btn btn-outline-primary
+    " [ngClass]="{ 'pull-left':this._authService.isAdmin()} ">View Details</a>
+                        <a (click)="deleteCourse(c._id, c.courseCode) " class="btn btn-outline-danger " *ngIf='this._authService.isAdmin()'>Delete Course</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- end div containing table of avail courses -->
+</div>
+<!-- end available courses div -->

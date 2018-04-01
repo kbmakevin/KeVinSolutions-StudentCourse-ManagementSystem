@@ -1,14 +1,13 @@
-<h4>New Course</h4>
-<!-- <form (ngSubmit)="create()"> -->
+<h4>Update Course</h4>
 
-<form #f='ngForm' [ngClass]="{'was-validated': f.submitted}" (ngSubmit)="f.form.valid && create()" novalidate>
+<form #f='ngForm' [ngClass]="{'was-validated': f.submitted}" (ngSubmit)="f.form.valid && update()" novalidate>
 
   <div class="form-group row">
     <div class="col-4 text-right">
       <label>Course Code:</label>
     </div>
     <div class="col-md-5">
-      <input type="text" class="form-control" required [(ngModel)]="course.courseCode" name="courseCode">
+      <input type="text" class="form-control" required [(ngModel)]="course.courseCode" name="courseCode" disabled>
       <div class="invalid-feedback text-left">Course Code is required!</div>
     </div>
   </div>
@@ -33,7 +32,6 @@
     </div>
   </div>
 
-  <!-- Last Name -->
   <div class="form-group row">
     <div class="col-4 text-right">
       <label>Semester:</label>
@@ -46,7 +44,7 @@
 
   <!-- Buttons -->
   <button type="submit" class="btn btn-outline-success">
-    <i class="fa fa-check-square-o"></i> Create</button>
+    <i class="fa fa-check-square-o"></i> Update</button>
   <a [routerLink]="['/courses']" class="btn btn-outline-warning">
     <i class="fa fa-undo"> Cancel</i>
   </a>

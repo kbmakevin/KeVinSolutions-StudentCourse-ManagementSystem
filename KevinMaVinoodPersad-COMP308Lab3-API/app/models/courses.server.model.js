@@ -11,7 +11,10 @@ const mongoose = require('mongoose');
 
 // create a model class
 let coursesSchema = mongoose.Schema({
-    courseCode: String,
+    courseCode: {
+        type: String,
+        unique: true,
+    },
     courseName: String,
     section: Number,
     semester: Number,

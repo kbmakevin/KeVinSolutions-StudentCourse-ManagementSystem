@@ -43,40 +43,4 @@
             <a routerLink='/students' class="btn btn-outline-info" [ngClass]="{'pull-left':isMyProfile}">Return to List</a>
         </div>
     </div>
-
-    <div class="row justify-content-center ">
-        <div *ngIf="registered;else notregistered " class="col-md-9 " style="margin-top:15px ">
-            <h4>Courses</h4>
-            <hr />
-            <table class="table ">
-                <thead class="thead-light ">
-                    <tr>
-                        <th scope="col ">Code</th>
-                        <th scope="col ">Name</th>
-                        <th scope="col ">Section</th>
-                        <th scope="col ">Semester</th>
-                        <th scope="col "></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let c of student[ 'courses'] ">
-                        <th scope="row ">{{ c.courseCode }}</th>
-                        <td>{{ c.courseName }}</td>
-                        <td>{{ c.section }}</td>
-                        <td>{{ c.semester }}</td>
-                        <td>
-                            <a (click)="dropCourse(c._id) " class="btn btn-danger pull-right " style="background-color:white;color:red; ">Drop</a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <ng-template #notregistered>
-            <div class="col-md-12 ">
-                <h4>No Courses Registered...</h4>
-            </div>
-        </ng-template>
-    </div>
-
 </div>

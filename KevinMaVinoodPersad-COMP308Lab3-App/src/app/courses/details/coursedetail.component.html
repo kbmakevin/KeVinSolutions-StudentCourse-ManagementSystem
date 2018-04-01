@@ -1,52 +1,68 @@
 <div style="margin-top:20px">
-        <h4>Course Details</h4>
-        <div class="row justify-content-center">
-            <div class="col-md-7">
-                    <hr />
-                    <table class="table table-striped" align="center" >
-                            <tbody  class="text-left">
-                                <tr>
-                                    <td><b>Course Code</b>: {{ course.courseCode }}</td>
-                                    <td style="padding-left: 40px"><b>Course Name</b>: {{ course.courseName }}</td>
-                                </tr>
-                                <tr>
-                                    <td><b>Section</b>: {{ course.section }}</td>
-                                    <td style="padding-left: 40px"><b>Semester</b>: {{ course.semester }}</td>
-                                </tr>
+    <h4>Course Details</h4>
+    <div class="row justify-content-center">
+        <div class="col-md-7">
+            <hr />
+            <table class="table table-striped" align="center">
+                <tbody class="text-left">
+                    <tr>
+                        <td>
+                            <b>Course Code</b>: {{ course?.courseCode }}</td>
+                        <td style="padding-left: 40px">
+                            <b>Course Name</b>: {{ course?.courseName }}</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b>Section</b>: {{ course?.section }}</td>
+                        <td style="padding-left: 40px">
+                            <b>Semester</b>: {{ course?.semester }}</td>
+                    </tr>
 
-                            </tbody>
-                        </table>
-            </div>
-            
-           <div *ngIf="hasStudents;else noStudents" class="col-md-9" style="margin-top:15px" >
-                    <h4>Students Registered</h4><hr />
-           <table class="table">
-                    <thead class="thead-light">
-                      <tr>
-                        <th scope="col">Student #</th>
-                        <th scope="col">First Name</th>
-                        <th scope="col">Last Name</th>
-                        <th scope="col">Program</th>
-                        <th scope="col"></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let s of course['students']">
-                            <th scope="row">{{ s.studentNumber }}</th>
-                            <td>{{ s.firstName }}</td>
-                            <td>{{ s.lastName }}</td>
-                            <td>{{ s.program }}</td>
-                            <td>
-                                    <a (click)="dropStudent(s._id)" class="btn btn-danger pull-right" style="background-color:white;color:red; ">Drop Student</a>
-                            </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  </div>
-    
-                  <ng-template #noStudents>
-                      <div class="col-md-12">
-                            <h4>No Students Registered...</h4>
-                  </div> 
-                </ng-template>
+                </tbody>
+            </table>
         </div>
+    </div>
+    <div class="row justify-content-center" style="margin-bottom: 3vh;">
+        <div class="col-md" *ngIf='!isAdminView'>
+            <a class="btn btn-outline-success pull-right">Enroll In This Class</a>
+        </div>
+        <div class="col-md" *ngIf='isAdminView'>
+            <a [routerLink]="['/courses/update']" [queryParams]="{id: this.courseId} " class="btn btn-outline-warning pull-right">Update Details</a>
+        </div>
+        <div class="col-md">
+            <a routerLink='/courses' class="btn btn-outline-info pull-left">Return to List</a>
+        </div>
+    </div>
+
+    <div *ngIf="hasStudents;else noStudents" class="col-md-9" style="margin-top:15px">
+        <h4>Students Registered</h4>
+        <hr />
+        <table class="table">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Student #</th>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">Program</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let s of course['students']">
+                    <th scope="row">{{ s.studentNumber }}</th>
+                    <td>{{ s.firstName }}</td>
+                    <td>{{ s.lastName }}</td>
+                    <td>{{ s.program }}</td>
+                    <td>
+                        <a (click)="dropStudent(s._id)" class="btn btn-danger pull-right" style="background-color:white;color:red; ">Drop Student</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <ng-template #noStudents>
+        <div class="col-md-12">
+            <h4>No Students Registered...</h4>
+        </div>
+    </ng-template>

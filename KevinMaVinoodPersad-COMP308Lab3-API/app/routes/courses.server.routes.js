@@ -16,29 +16,39 @@ const Student = require('../models/students.server.model');
 const Course = require('../models/courses.server.model');
 const coursesController = require("../controllers/courses.server.controller");
 
-router.post('/', (req, res, next) => {
-    coursesController.CreateCourse(req, res, next);
-});
+router.route('/')
+    .get((req, res, next) => coursesController.GetCourses(req, res, next))
+    .post((req, res, next) => coursesController.CreateCourse(req, res, next));
 
-router.get('/', (req, res, next) => {
-    coursesController.GetCourses(req, res, next);
-});
 
-router.get('/delete/:code', (req, res, next) => {
-    coursesController.DeleteCourse(req, res, next);
-});
+// router.post('/', (req, res, next) => {
+//     coursesController.CreateCourse(req, res, next);
+// });
 
-router.get('/:id', (req, res, next) => {
-    coursesController.GetOneCourse(req, res, next);
-});
+// router.get('/', (req, res, next) => {
+//     coursesController.GetCourses(req, res, next);
+// });
 
-router.post('/removestudent', (req, res, next) => {
-    coursesController.RemoveStudentFromCourse(req, res, next);
-});
+router.route('/:id')
+    .get((req, res, next) => coursesController.GetOneCourse(req, res, next))
+    .put((req, res, next) => coursesController.UpdateCourse(req, res, next))
+    .delete((req, res, next) => coursesController.DeleteCourse(req, res, next));
 
-router.post('/updatecourse', (req, res, next) => {
-    coursesController.UpdateCourse(req, res, next);
-});
+// router.get('/delete/:code', (req, res, next) => {
+//     coursesController.DeleteCourse(req, res, next);
+// });
+
+// router.get('/:id', (req, res, next) => {
+//     coursesController.GetOneCourse(req, res, next);
+// });
+
+// router.post('/removestudent', (req, res, next) => {
+//     coursesController.RemoveStudentFromCourse(req, res, next);
+// });
+
+// router.post('/updatecourse', (req, res, next) => {
+//     coursesController.UpdateCourse(req, res, next);
+// });
 
 
 module.exports = router;

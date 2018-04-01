@@ -2,9 +2,7 @@ import 'rxjs/Rx';
 import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
 import { Http, Headers, Request, RequestMethod, Response } from '@angular/http';
-
-
-
+import { Course } from '../interfaces/course';
 
 @Injectable()
 export class CoursesService {
@@ -13,7 +11,7 @@ export class CoursesService {
 
     constructor(private _http: Http) { }
 
-    listCourses() {
+    listCourses(): Observable<any> {
         return this._http
             .get(this._courseBaseURL)
             .map((res: Response) => res.json())
@@ -22,23 +20,24 @@ export class CoursesService {
 
     createCourses(course: any): Observable<any> {
         return this._http
-        .post(this._courseBaseURL, course)
-        .map((res: Response) => res.json())
-        .catch(this.handleError);
+            .post(this._courseBaseURL, course)
+            .map((res: Response) => res.json())
+            .catch(this.handleError);
     }
 
-    deleteCourse(code: any): Observable<any> {
+    deleteCourse(id: any): Observable<any> {
         return this._http
-        .get(this._courseBaseURL + '/delete/' + code)
-        .map((res: Response) =>res.json())
-        .catch(this.handleError);
+            .delete(this._courseBaseURL + '/' + id)
+            //   .get(this._courseBaseURL + '/delete/' + code)
+            .map((res: Response) => res.json())
+            .catch(this.handleError);
     }
 
     getCourse(id: any): Observable<any> {
         return this._http
-        .get(this._courseBaseURL + '/' + id)
-        .map((res: Response) =>   res.json())
-        .catch(this.handleError);
+            .get(this._courseBaseURL + '/' + id)
+            .map((res: Response) => res.json())
+            .catch(this.handleError);
     }
 
     dropStudent(details: any): Observable<any> {
@@ -48,14 +47,15 @@ export class CoursesService {
             .catch(this.handleError);
     }
 
-    updateCourse(c: any): Observable<any> {
+    updateCourse(id: String, course: Course): Observable<any> {
         return this._http
-            .post(this._courseBaseURL + '/updatecourse', c)
+            .put(this._courseBaseURL + '/' + id, course)
+            //   .post(this._courseBaseURL + '/updatecourse', c)
             .map((res: Response) => res.json())
             .catch(this.handleError);
     }
 
     private handleError(error: Response) {
         return Observable.throw(error.json().message || 'Server error');
-      }
+    }
 }

@@ -8,6 +8,8 @@ import { ListCoursesComponent } from './list/listcourses.component';
 import { CreateCourseComponent } from './create/createcourse.component';
 import { CoursesService } from './courses.service';
 import { routing } from '../app.routing';
+import { CourseDetailComponent } from './details/coursedetail.component';
+import { UpdateCourseComponent } from './update-course/update-course.component';
 
 @NgModule({
     imports: [
@@ -15,7 +17,13 @@ import { routing } from '../app.routing';
         FormsModule,
         routing
     ],
-    declarations: [CoursesComponent, ListCoursesComponent, CreateCourseComponent],
+    declarations: [
+        CoursesComponent,
+        ListCoursesComponent,
+        CreateCourseComponent,
+        CourseDetailComponent,
+        UpdateCourseComponent,
+    ],
     providers: [CoursesService]
 })
 export class CoursesModule { }

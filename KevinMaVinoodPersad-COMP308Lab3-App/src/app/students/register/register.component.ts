@@ -4,25 +4,8 @@ import { StudentsService } from '../students.service';
 import { CoursesService } from '../../courses/courses.service';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { NgForm } from '@angular/forms';
-
-interface Student {
-  studentNumber: Number;
-  password: String;
-  firstName: String;
-  lastName: String;
-  address: String;
-  city: String;
-  phoneNumber: String;
-  email: String;
-  program: String;
-}
-
-interface Course {
-  courseCode: String;
-  courseName: String;
-  section: Number;
-  semester: Number;
-}
+import { Student } from '../../interfaces/student';
+import { Course } from '../../interfaces/course';
 
 @Component({
   selector: 'app-register',
@@ -53,7 +36,7 @@ export class RegisterComponent implements OnInit {
     this._studentsService
       .getStudent(this.studentId)
       .subscribe((res) => {
-        this.student = res
+        this.student = res;
         console.log(this.student);
       });
   }

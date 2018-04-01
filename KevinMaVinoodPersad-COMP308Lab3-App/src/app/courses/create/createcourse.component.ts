@@ -1,42 +1,39 @@
 
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CoursesService } from '../courses.service';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { NgForm } from '@angular/forms';
 import { Course } from '../../interfaces/course';
+import { AlertService } from '../../alert/alert.service';
 
 @Component({
   selector: 'app-createcourse',
   templateUrl: './createcourse.component.html',
   styleUrls: ['./createcourse.component.css']
 })
-export class CreateCourseComponent implements OnInit {
+export class CreateCourseComponent {
 
   course: Course = {
-    courseCode: 'COMP 211',
-    courseName: 'testing',
+    courseCode: 'COMP308',
+    courseName: 'Emerging Technologies',
     section: 2,
     semester: 3
-  }
-  errorMessage: string;
+  };
 
   constructor(private _router: Router,
+    private _alertService: AlertService,
     private _coursesService: CoursesService) {
 
   }
 
-  ngOnInit() {
-
-  }
-
-  create(form: NgForm) {
-    console.log('In course create method');
-
+  create() {
     this._coursesService
       .createCourses(this.course)
-      .subscribe(course =>
-        this._router.navigate(['courses']),
-        error => this.errorMessage = error)
-  };
-
+      .subscribe(createdCourse => {
+        this._alertService.success(`Course (${createdCourse.courseCode}) successfully created`, true);
+        this._router.navigate(['/courses/details'],
+          { queryParams: { 'id': createdCourse._id } }
+        );
+      },
+        error => this._alertService.error(error));
+  }
 }

@@ -1,8 +1,9 @@
 
-import { Router } from '@angular/router';
 import { CoursesService } from '../courses.service';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Course } from '../../interfaces/course';
+import { AuthenticationService } from '../../authentication/authentication.service';
+import { AlertService } from '../../alert/alert.service';
 
 @Component({
   selector: 'app-listcourse',
@@ -12,9 +13,10 @@ import { Course } from '../../interfaces/course';
 export class ListCoursesComponent implements OnInit {
 
   course: Course;
-  errorMessage: String;
 
-  constructor(private _router: Router,
+  constructor(
+    private _authService: AuthenticationService,
+    private _alertService: AlertService,
     private _coursesService: CoursesService) {
 
   }
@@ -23,14 +25,17 @@ export class ListCoursesComponent implements OnInit {
     this._coursesService.listCourses()
       .subscribe((course) => {
         this.course = course;
-        console.log(course);
+        // console.log(course);
       });
   }
 
-  deleteCourse(code: String) {
-    this._coursesService.deleteCourse(code)
-      .subscribe(c => this.ngOnInit(),
-        error => this.errorMessage = error);
+  deleteCourse(id: any, code: String) {
+    this._coursesService.deleteCourse(id)
+      .subscribe(c => {
+        this._alertService.success(`Course (${code}) successfully deleted`, true);
+        this.ngOnInit();
+      },
+        error => this._alertService.error(error));
   }
 
 }
