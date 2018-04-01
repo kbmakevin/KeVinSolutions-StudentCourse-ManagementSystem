@@ -26,6 +26,7 @@ router.route('/login')
 router.route('/:id')
     .get((req, res, next) => studentsController.GetStudentDetails(req, res, next))
     .put((req, res, next) => studentsController.UpdateStudent(req, res, next))
+    .delete((req, res, next) => studentsController.DeleteStudent(req, res, next));
 
 router.post('/addcourse', (req, res, next) => studentsController.EnrollInCourse(req, res, next));
 

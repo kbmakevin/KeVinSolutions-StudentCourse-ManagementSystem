@@ -1,4 +1,4 @@
-<h4>Edit Student</h4>
+<h4>Update Profile</h4>
 <form #f='ngForm' [ngClass]="{'was-validated': f.submitted}" (ngSubmit)="f.form.valid && update()" novalidate>
   <!-- Student Number -->
   <div class="form-group row">
@@ -102,7 +102,7 @@
 
   <!-- Buttons -->
   <button type="submit" class="btn btn-outline-success">
-    <i class="fa fa-check-square-o"></i> Create</button>
+    <i class="fa fa-check-square-o"></i> Update</button>
   <a routerLink='/students' class="btn btn-outline-warning">
     <i class="fa fa-undo"> Cancel</i>
   </a>

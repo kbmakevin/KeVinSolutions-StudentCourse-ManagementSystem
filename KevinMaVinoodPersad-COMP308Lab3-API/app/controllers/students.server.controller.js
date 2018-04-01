@@ -109,16 +109,15 @@ module.exports.UpdateStudent = function (req, res, next) {
     });
 }
 
-// Delete student
+// 2018.03.31 - 21:16:58 - Delete student
 module.exports.DeleteStudent = function (req, res, next) {
-    let studentNumber = req.body.studentNumber;
-
-    Student.remove({ studentNumber: studentNumber }, (err) => {
+    let id = req.params.id;
+    Student.remove({ _id: id }, (err) => {
         if (err) {
             console.error(err);
             res.end(err);
         } else {
-            res.status(200).json(studentNumber);
+            res.status(200).json(id);
         }
     });
 }

@@ -3,6 +3,7 @@ import { StudentsService } from '../students.service';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Student } from '../../interfaces/student';
 import { Course } from '../../interfaces/course';
+import { AuthenticationService } from '../../authentication/authentication.service';
 
 
 @Component({
@@ -16,8 +17,11 @@ export class DetailsComponent implements OnInit {
     student: Student;
     registered: Boolean = false;
 
+    isMyProfile: Boolean;
+
     constructor(
         private _route: ActivatedRoute,
+        private _authService: AuthenticationService,
         private _studentsService: StudentsService) {
         this._route.queryParams.subscribe(params => this.studentId = params['id']);
     }
@@ -31,9 +35,16 @@ export class DetailsComponent implements OnInit {
                 if (this.student.courses.length > 0) {
                     this.registered = true;
                 }
+                if (this._authService.isAdmin()) {
+                    // 2018.03.31 - 20:43:40 - every profile belongs to admin :)
+                    this.isMyProfile = true;
+                } else {
+                    // 2018.03.31 - 20:42:17 - student can only update THEIR OWN profile
+                    this.isMyProfile = this._authService.getStudent()._id === this.studentId;
+                }
             });
 
-        console.log(this.registered);
+        console.log(`This student is registered: ${this.registered}`);
     }
 
     // dropCourse(c_id: string) {

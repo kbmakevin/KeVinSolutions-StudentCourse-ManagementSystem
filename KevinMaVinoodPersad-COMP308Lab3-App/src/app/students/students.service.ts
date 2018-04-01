@@ -41,6 +41,13 @@ export class StudentsService {
       .catch(this.handleError);
   }
 
+  deleteStudent(id: String): Observable<any> {
+    return this._http
+      .delete(this._baseURL + '/' + id)
+      .map(res => res.json())
+      .catch(this.handleError);
+  }
+
   private handleError(error: Response) {
     return Observable.throw(error.json().message || 'Server error');
   }

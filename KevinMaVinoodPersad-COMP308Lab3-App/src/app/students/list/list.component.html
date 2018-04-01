@@ -1,8 +1,15 @@
 <div style="padding-top:25px; padding-bottom:45px" *ngIf='this._authService.isAdmin()'>
-  <a [routerLink]="['create']" class="btn btn-success pull-left ">Create New Student</a>
+  <a [routerLink]="['create']" class="btn btn-outline-success" [ngClass]="{'pull-left': student.length}">Create New Student</a>
 </div>
 
-<div style="margin-top:15px">
+<div *ngIf="!student.length">
+  <p>
+    There are currently no students enrolled at Centennial College.
+    <br> Please feel free to register a new student by clicking the button above :) !
+  </p>
+</div>
+
+<div style="margin-top:15px" *ngIf="student.length>0">
   <table class="table">
     <thead class="thead-dark">
       <tr>
@@ -20,9 +27,10 @@
         <td>{{ stud.lastName }}</td>
         <td>{{ stud.program }}</td>
         <td>
-          <a [routerLink]="['register']" [queryParams]="{id: stud._id}" class="btn btn-success" style="background-color:white;color:green;"
-            *ngIf='this._authService.isAdmin()'>Enroll Courses</a>
-          <a [routerLink]="['details']" [queryParams]="{id: stud._id}" class="btn btn-primary pull-right" style="background-color:white;color:blue; ">View Profile</a>
+          <!-- <a [routerLink]="['register']" [queryParams]="{id: stud._id}" class="btn btn-success" style="background-color:white;color:green;" -->
+          <a [routerLink]="['details']" [queryParams]="{id: stud._id}" class="btn btn-outline-primary" [ngClass]="{'pull-left':this._authService.isAdmin()}">View Profile</a>
+          <a (click)="delete(stud._id, stud.studentNumber)" class="btn btn-outline-danger" *ngIf='this._authService.isAdmin()'>Delete Student</a>
+
         </td>
       </tr>
     </tbody>
