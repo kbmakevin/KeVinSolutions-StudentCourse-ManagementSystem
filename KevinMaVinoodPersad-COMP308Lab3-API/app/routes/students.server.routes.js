@@ -28,6 +28,10 @@ router.route('/:id')
     .put((req, res, next) => studentsController.UpdateStudent(req, res, next))
     .delete((req, res, next) => studentsController.DeleteStudent(req, res, next));
 
-// router.post('/addcourse', (req, res, next) => studentsController.EnrollInCourse(req, res, next));
+router.route('/courses')
+    .post((req, res, next) => studentsController.EnrollInCourse(req, res, next));
+
+router.route('/courses/:deletionObj')
+    .delete((req, res, next) => studentsController.DropCourse(req, res, next));
 
 module.exports = router;

@@ -34,6 +34,14 @@ router.route('/:id')
     .put((req, res, next) => coursesController.UpdateCourse(req, res, next))
     .delete((req, res, next) => coursesController.DeleteCourse(req, res, next));
 
+// 2018.04.01 - 16:45:53
+router.route('/getAvailable/:studentId')
+    .get((req, res, next) => coursesController.GetAvailableCourses(req, res, next));
+
+// 2018.04.01 - 16:13:02
+router.route('/getEnrolled/:studentId')
+    .get((req, res, next) => coursesController.GetEnrolledCourses(req, res, next));
+
 // router.get('/delete/:code', (req, res, next) => {
 //     coursesController.DeleteCourse(req, res, next);
 // });

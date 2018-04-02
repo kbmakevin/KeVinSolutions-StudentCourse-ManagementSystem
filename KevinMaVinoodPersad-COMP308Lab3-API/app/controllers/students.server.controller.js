@@ -81,8 +81,9 @@ module.exports.UpdateStudent = function (req, res, next) {
 
     Student.update({ _id: id }, updatedStudent, (err) => {
         if (err) {
-            console.error(err);
-            res.end(err);
+            return res.status(400).send({
+                message: getErrorMessage(err)
+            });
         } else {
             res.status(200).json(updatedStudent);
         }
@@ -94,8 +95,9 @@ module.exports.DeleteStudent = function (req, res, next) {
     let id = req.params.id;
     Student.remove({ _id: id }, (err) => {
         if (err) {
-            console.error(err);
-            res.end(err);
+            return res.status(400).send({
+                message: getErrorMessage(err)
+            });
         } else {
             res.status(200).json(id);
         }
@@ -103,82 +105,69 @@ module.exports.DeleteStudent = function (req, res, next) {
 }
 
 module.exports.EnrollInCourse = function (req, res, next) {
-    // My assumption here is that we will get the student number and course code and
-    // add the course to the student by finding both from database. Not sure if this is how its done.
+    const courseId = req.body.courseId;
+    const studentId = req.body.studentId;
 
-    // let courseCode = req.body.code;
-    // let course_id = req.body.id;
-
-    // let studentId = req.body.studentId;
-    // let student = new Student();
-    // let course = new Course();
-
-    // Student.find({ studentNumber: studentId }, (err, s) => {
-    //     if (err) {
-    //         return res.status(400).send({
-    //             message: getErrorMessage(err)
-    //         });
-    //     } else {
-    //         student = s;
-    //     }
-    // })
-
-    // Course.find({ courseCode: courseCode }, (err, c) => {
-    //     if (err) {
-    //         return res.status(400).send({
-    //             message: getErrorMessage(err)
-    //         });
-    //     } else {
-    //         course = c;
-    //     }
-    // })
-    let course_Id = req.body.id;
-    let studentId = req.body.stdId;
-
-    Student.findOneAndUpdate({ _id: studentId },
-        { $push: { courses: course_Id } },
-        { safe: true, upsert: true },
+    Student.findOneAndUpdate(
+        { _id: studentId },
+        { $push: { courses: courseId } },
+        { new: true },
         (err, s) => {
             if (err) {
-                console.log(err);
+                return res.status(400).send({
+                    message: getErrorMessage(err)
+                });
             } else {
-                Course.findOneAndUpdate({ _id: course_Id },
+                Course.findOneAndUpdate(
+                    { _id: courseId },
                     { $push: { students: s._id } },
-                    { safe: true, upsert: true },
+                    { new: true },
                     (err, c) => {
                         if (err) {
-                            console.log(err);
+                            return res.status(400).send({
+                                message: getErrorMessage(err)
+                            });
                         } else {
+                            console.log(`Successfully added course (${c.courseCode}) to student (#${s.studentNumber}) ...`);
                             res.json(c);
                         }
                     }
-                );
+                )
             }
         }
     );
 }
 
 module.exports.DropCourse = function (req, res, next) {
-    let c_id = req.body.id;
-    let studentId = req.body.stdNum;
 
-    Student.findOneAndUpdate({ _id: studentId },
-        { $pull: { courses: c_id } },
-        { safe: true, upsert: true },
+    const courseId = JSON.parse(req.params.deletionObj).courseId;
+    const studentId = JSON.parse(req.params.deletionObj).studentId;
+
+    Student.findOneAndUpdate(
+        { _id: studentId },
+        { $pull: { courses: courseId } },
+        { new: true },
         (err, s) => {
             if (err) {
-                console.log(err);
+                return res.status(400).send({
+                    message: getErrorMessage(err)
+                });
             } else {
-                Course.findOneAndUpdate({ _id: c_id },
+                Course.findOneAndUpdate(
+                    { _id: courseId },
                     { $pull: { students: s._id } },
-                    { safe: true, upsert: true },
+                    { new: true },
                     (err, c) => {
                         if (err) {
-                            console.log(err);
+                            return res.status(400).send({
+                                message: getErrorMessage(err)
+                            });
                         } else {
+                            console.log(`Successfully dropped course (${c.courseCode}) from student (#${s.studentNumber}) ...`);
                             res.json(c);
                         }
-                    })
+                    }
+                )
             }
         }
     );

@@ -93,33 +93,33 @@ function getErrorMessage(err) {
     return message;
 };
 
-module.exports.RemoveStudentFromCourse = function (req, res, next) {
-    let c_Id = req.body.cId;
-    let s_Id = req.body.stdId;
+// module.exports.RemoveStudentFromCourse = function (req, res, next) {
+//     let c_Id = req.body.cId;
+//     let s_Id = req.body.stdId;
 
-    console.log(c_Id + ", " + s_Id);
-    Course.findOneAndUpdate({ _id: c_Id },
-        { $pull: { students: s_Id } },
-        { safe: true, upsert: true },
-        (err, c) => {
-            if (err) {
-                console.log(err);
-            } else {
-                Student.findOneAndUpdate({ _id: s_Id },
-                    { $pull: { courses: c_Id } },
-                    { safe: true, upsert: true },
-                    (err, s) => {
-                        if (err) {
-                            console.log(err);
-                        } else {
-                            res.json(s);
-                        }
-                    }
-                );
-            }
-        }
-    );
-};
+//     console.log(c_Id + ", " + s_Id);
+//     Course.findOneAndUpdate({ _id: c_Id },
+//         { $pull: { students: s_Id } },
+//         { safe: true, upsert: true },
+//         (err, c) => {
+//             if (err) {
+//                 console.log(err);
+//             } else {
+//                 Student.findOneAndUpdate({ _id: s_Id },
+//                     { $pull: { courses: c_Id } },
+//                     { safe: true, upsert: true },
+//                     (err, s) => {
+//                         if (err) {
+//                             console.log(err);
+//                         } else {
+//                             res.json(s);
+//                         }
+//                     }
+//                 );
+//             }
+//         }
+//     );
+// };
 
 module.exports.UpdateCourse = function (req, res, next) {
 
@@ -132,4 +132,44 @@ module.exports.UpdateCourse = function (req, res, next) {
             res.json(c);
         }
     })
+}
+
+// 2018.04.01 - 16:02:32
+module.exports.GetEnrolledCourses = function (req, res, next) {
+    const studentId = req.params.studentId;
+
+    // console.log('inside GetEnrolledCourses of course controller; studentId: ' + studentId);
+
+    Course.find({ students: studentId },
+        (err, c) => {
+            if (err) {
+                return res.status(400).send({
+                    message: getErrorMessage(err)
+                });
+            } else {
+                // console.log('found matching course: ' + c);
+                res.status(200).json(c);
+            }
+        }
+    );
+}
+
+// 2018.04.01 - 16:42:02
+module.exports.GetAvailableCourses = function (req, res, next) {
+    const studentId = req.params.studentId;
+
+    // console.log('inside GetAvailableCourses of course controller; studentId: ' + studentId);
+
+    Course.find({ students: { $ne: studentId } },
+        (err, c) => {
+            if (err) {
+                return res.status(400).send({
+                    message: getErrorMessage(err)
+                });
+            } else {
+                // console.log('found matching course: ' + c);
+                res.status(200).json(c);
+            }
+        }
+    );
 }

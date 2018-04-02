@@ -17,52 +17,77 @@
                         <td style="padding-left: 40px">
                             <b>Semester</b>: {{ course?.semester }}</td>
                     </tr>
-
                 </tbody>
             </table>
         </div>
     </div>
     <div class="row justify-content-center" style="margin-bottom: 3vh;">
-        <div class="col-md" *ngIf='!isAdminView'>
-            <a class="btn btn-outline-success pull-right">Enroll In This Class</a>
+        <!-- Student View Buttons -->
+        <!-- enroll -->
+        <div class="col-md" *ngIf='!isAdminView && !isEnrolled'>
+            <a (click)="enrollInCourse()" class="btn btn-outline-success pull-right">Enroll In This Class</a>
         </div>
+        <!-- drop course if already enrolled -->
+        <div class="col-md" *ngIf='!isAdminView && isEnrolled'>
+            <a (click)="dropCourse()" class="btn btn-outline-danger pull-right">Drop This Class</a>
+        </div>
+
+        <!-- Admin View buttons -->
         <div class="col-md" *ngIf='isAdminView'>
             <a [routerLink]="['/courses/update']" [queryParams]="{id: this.courseId} " class="btn btn-outline-warning pull-right">Update Details</a>
         </div>
+
+        <!-- Common View Buttons -->
         <div class="col-md">
             <a routerLink='/courses' class="btn btn-outline-info pull-left">Return to List</a>
         </div>
     </div>
 
-    <div *ngIf="hasStudents;else noStudents" class="col-md-9" style="margin-top:15px">
-        <h4>Students Registered</h4>
-        <hr />
-        <table class="table">
-            <thead class="thead-light">
-                <tr>
-                    <th scope="col">Student #</th>
-                    <th scope="col">First Name</th>
-                    <th scope="col">Last Name</th>
-                    <th scope="col">Program</th>
-                    <th scope="col"></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let s of course['students']">
-                    <th scope="row">{{ s.studentNumber }}</th>
-                    <td>{{ s.firstName }}</td>
-                    <td>{{ s.lastName }}</td>
-                    <td>{{ s.program }}</td>
-                    <td>
-                        <a (click)="dropStudent(s._id)" class="btn btn-danger pull-right" style="background-color:white;color:red; ">Drop Student</a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+
+    <div *ngIf="hasStudents;else noStudents" class="row justify-content-center" style="margin-top:15px">
+        <div class="col-md-9">
+            <h4>Enrolled Students ({{ course?.students.length }})</h4>
+            <hr />
+            <table class="table">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Student #</th>
+                        <th scope="col">First Name</th>
+                        <th scope="col">Last Name</th>
+                        <th scope="col">Program</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let s of course['students']">
+                        <th scope="row">{{ s.studentNumber }}</th>
+                        <td>{{ s.firstName }}</td>
+                        <td>{{ s.lastName }}</td>
+                        <td>{{ s.program }}</td>
+                        <td>
+                            <a [routerLink]="['details']" [queryParams]="{id: s._id}" class="btn btn-outline-primary" *ngIf='!isAdminView'>View Profile</a>
+                            <a *ngIf='isAdminView' (click)="dropStudent(s._id)" class="btn btn-outline-danger">Drop Student</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
-    <ng-template #noStudents>
-        <div class="col-md-12">
-            <h4>No Students Registered...</h4>
-        </div>
-    </ng-template>
+    <div class="row justify-content-center">
+        <ng-template #noStudents>
+            <div class="col-md-8 offset-md-2">
+                <h4>Enrolled Students</h4>
+                <hr>
+                <p>
+                    There are currently no students enrolled in this class...
+                    <br>
+                    <span *ngIf='!isAdminView'>
+                        Do you dare to be the first ;) ?
+                    </span>
+                </p>
+            </div>
+        </ng-template>
+    </div>
+
+</div>

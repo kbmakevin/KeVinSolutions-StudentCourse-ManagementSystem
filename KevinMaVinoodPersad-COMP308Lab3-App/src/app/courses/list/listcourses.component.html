@@ -3,10 +3,10 @@
 </div> -->
 
 <div style="padding-top:25px; padding-bottom:45px" *ngIf='this._authService.isAdmin()'>
-    <a [routerLink]="['create']" class="btn btn-outline-success" [ngClass]="{'pull-left': course.length}">Create New Course</a>
+    <a [routerLink]="['create']" class="btn btn-outline-success" [ngClass]="{'pull-left': availableCourses.length}">Create New Course</a>
 </div>
 
-<div *ngIf="!course.length && this._authService.isAdmin()">
+<div *ngIf="!availableCourses.length && this._authService.isAdmin()">
     <p>
         There are currently no courses offered at Centennial College.
         <br> Please feel free to create a new course by clicking the button above :) !
@@ -15,13 +15,16 @@
 
 <div *ngIf='!this._authService.isAdmin()'>
     <h4>Currently Enrolled In:</h4>
-    <p *ngIf='!this._authService.getStudent().courses.length'>
+    <!-- <p *ngIf='!this._authService.getStudent().courses.length'> -->
+    <p *ngIf='!enrolledCourses.length'>
         You are currently enrolled in 0 classes.
         <br>Please feel free to enroll in some of the available courses below by
         <br>clicking the View Details button and then clicking Enroll In This Class on the next page :) !
     </p>
 
-    <div style="margin-top:15px" *ngIf="this._authService.getStudent().courses.length">
+    <!-- authenticated student is enrolled in classes -->
+    <!-- <div style="margin-top:15px" *ngIf="this._authService.getStudent().courses.length"> -->
+    <div style="margin-top:15px" *ngIf="enrolledCourses.length">
         <table class="table">
             <thead class="thead-dark">
                 <tr>
@@ -29,15 +32,18 @@
                     <th scope="col">Course Name</th>
                     <th scope="col">Section</th>
                     <th scope="col">Semester</th>
+                    <th scope="col">Number of Students</th>
                     <th scope="col"></th>
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let c of this._authService.getStudent().courses">
+                <!-- <tr *ngFor="let c of this._authService.getStudent().courses"> -->
+                <tr *ngFor="let c of enrolledCourses">
                     <th scope="row">{{ c.courseCode }}</th>
                     <td>{{ c.courseName }}</td>
                     <td>{{ c.section }}</td>
                     <td>{{ c.semester }}</td>
+                    <td>{{ c.students.length }}</td>
                     <td>
                         <a [routerLink]="['details']" [queryParams]="{id: c._id}" class="btn btn-outline-primary" [ngClass]="{'pull-left':this._authService.isAdmin()}">View Details</a>
                         <a (click)="delete(c._id, c.courseCode)" class="btn btn-outline-danger" *ngIf='this._authService.isAdmin()'>Delete Course</a>
@@ -49,11 +55,11 @@
     <!-- end div containing table courses the authenticated student is enrolled in -->
 </div>
 
-<div *ngIf="course.length">
+<div *ngIf="availableCourses.length">
     <h4>Available Courses</h4>
 
     <!-- ONLY DISPLAY COURSES BELOW WHICH THE STUDENT IS NOT ALREADY ENROLLED IN! -->
-    <div style=" margin-top:15px " *ngIf="course.length ">
+    <div style=" margin-top:15px " *ngIf="availableCourses.length ">
         <table class="table ">
             <thead class="thead-dark ">
                 <tr>
@@ -61,15 +67,17 @@
                     <th scope="col ">Course Name</th>
                     <th scope="col ">Section</th>
                     <th scope="col ">Semester</th>
+                    <th scope="col">Number of Students</th>
                     <th scope="col "></th>
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let c of course ">
+                <tr *ngFor="let c of availableCourses ">
                     <th scope="row ">{{ c.courseCode }}</th>
                     <td>{{ c.courseName }}</td>
                     <td>{{ c.section }}</td>
                     <td>{{ c.semester }}</td>
+                    <td>{{ c.students.length }}</td>
                     <td>
                         <a [routerLink]="[ 'details'] " [queryParams]="{id: c._id} " class="btn btn-outline-primary
     " [ngClass]="{ 'pull-left':this._authService.isAdmin()} ">View Details</a>
