@@ -85,6 +85,17 @@ export class CourseDetailComponent implements OnInit {
         error => this._alertService.error(error));
   }
 
+  dropStudent(studentId: String, studentNumber: Number) {
+    this._studentsService
+      .dropCourse({ courseId: this.courseId, studentId: studentId })
+      .subscribe(res => {
+        this._alertService.success(`Student (#${studentNumber}) has successfully dropped this course (${this.course.courseCode})!`, true);
+        this.ngOnInit();
+        window.location.reload();
+      },
+        error => this._alertService.error(error));
+  }
+
   // helper methods
   private _isCurrentStudentEnrolledInThisCourse(): Boolean {
     let result = false;

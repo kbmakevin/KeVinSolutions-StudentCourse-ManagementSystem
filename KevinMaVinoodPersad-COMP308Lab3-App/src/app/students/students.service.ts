@@ -31,7 +31,6 @@ export class StudentsService {
     return this._http
       .get(this._baseURL + '/' + id)
       .map((res: Response) => res.json())
-      // .catch((err: any) => console.log(err));
       .catch(this.handleError);
   }
 
@@ -68,7 +67,6 @@ export class StudentsService {
     return this._http
       .get(this._courseBaseURL + '/getEnrolled/' + studentId)
       .map((res: Response) => {
-        // console.log('inside ng service; getEnrolledCourses res: ' + JSON.stringify(res.json()));
         return res.json();
       })
       .catch(this.handleError);
@@ -78,7 +76,6 @@ export class StudentsService {
     return this._http
       .get(this._courseBaseURL + '/getAvailable/' + studentId)
       .map(res => {
-        // console.log('inside ng service; getAvailableCourses res: ' + JSON.stringify(res.json()));
         return res.json();
       })
       .catch(this.handleError);

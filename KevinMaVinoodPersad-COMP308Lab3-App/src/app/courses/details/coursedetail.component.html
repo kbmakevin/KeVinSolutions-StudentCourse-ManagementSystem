@@ -65,8 +65,11 @@
                         <td>{{ s.lastName }}</td>
                         <td>{{ s.program }}</td>
                         <td>
+                            <!-- STUDENT BUTTON -->
                             <a [routerLink]="['details']" [queryParams]="{id: s._id}" class="btn btn-outline-primary" *ngIf='!isAdminView'>View Profile</a>
-                            <a *ngIf='isAdminView' (click)="dropStudent(s._id)" class="btn btn-outline-danger">Drop Student</a>
+
+                            <!-- ADMIN BUTTON -->
+                            <a *ngIf='isAdminView' (click)="dropStudent(s._id, s.studentNumber)" class="btn btn-outline-danger">Drop Student</a>
                         </td>
                     </tr>
                 </tbody>
