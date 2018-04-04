@@ -60,21 +60,17 @@ module.exports.DeleteCourse = function (req, res, next) {
                     Student.findById(studentId,
                         (err, student) => {
                             console.log(student.studentNumber);
-                            // return res.json(student);
                         });
                     Student.findByIdAndUpdate(studentId,
                         { $pull: { courses: courseId } },
                         { new: true },
                         (err, updatedStudent) => {
                             if (err) {
-                                // console.log('encountered error: ' + err);
                                 return res.status(400).send({
                                     message: getErrorMessage(err)
                                 });
                             } else {
                                 console.log(`Successfully dropped course (${course.courseCode}) from student (#${updatedStudent.studentNumber}) ...`);
-                                // res.json(updatedStudent);
-                                // return res.json(updatedStudent);
                             }
                         });
                 });

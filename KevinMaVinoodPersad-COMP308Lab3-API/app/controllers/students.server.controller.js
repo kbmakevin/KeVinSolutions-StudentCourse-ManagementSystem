@@ -90,16 +90,48 @@ module.exports.UpdateStudent = function (req, res, next) {
     });
 }
 
+// 2018.04.04 - 16:35:36 - before deleting, removes reference from every course to this student
 // 2018.03.31 - 21:16:58 - Delete student
 module.exports.DeleteStudent = function (req, res, next) {
-    let id = req.params.id;
-    Student.remove({ _id: id }, (err) => {
+    const studentId = req.params.id;
+
+    Student.findById(studentId,
+        (err, student) => {
+            if (err) {
+                return res.status(400).send({
+                    message: getErrorMessage(err)
+                });
+            } else {
+                // 2018.04.04 - 16:44:32 - find all courses this student is taking
+                student.courses.forEach(courseId => {
+                    // 2018.04.04 - 16:46:51 - drop student from each of these courses
+                    Course.findByIdAndUpdate(courseId,
+                        { $pull: { students: studentId } },
+                        { new: true },
+                        (err, updatedCourse) => {
+                            if (err) {
+                                return res.status(400).send({
+                                    message: getErrorMessage(err)
+                                });
+                            } else {
+                                console.log(`Successfully dropped student (#${student.studentNumber}) from course (${updatedCourse.courseCode}) ...`);
+                            }
+                        }
+                    );
+                });
+            }
+        }
+    );
+
+    // delete THIS student
+
+    Student.remove({ _id: studentId }, (err) => {
         if (err) {
             return res.status(400).send({
                 message: getErrorMessage(err)
             });
         } else {
-            res.status(200).json(id);
+            return res.status(200).json(studentId);
         }
     });
 }
