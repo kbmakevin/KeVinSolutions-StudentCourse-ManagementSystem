@@ -16,6 +16,7 @@ export class ListCoursesComponent implements OnInit {
   availableCourses: Course[];
   enrolledCourses: Course[];
   currentStudentId: String;
+  isAdmin: Boolean;
 
   constructor(
     private _authService: AuthenticationService,
@@ -29,8 +30,11 @@ export class ListCoursesComponent implements OnInit {
 
     this.currentStudentId = this._authService.getStudent()._id;
 
+    this.isAdmin = this._authService.isAdmin();
+
     // enrolled courses only for student display
-    if (!this._authService.isAdmin()) {
+    if (!this.isAdmin) {
+      // if (!this._authService.isAdmin()) {
       this._studentService.getEnrolledCourses(this.currentStudentId)
         .subscribe(c => {
           this.enrolledCourses = c;

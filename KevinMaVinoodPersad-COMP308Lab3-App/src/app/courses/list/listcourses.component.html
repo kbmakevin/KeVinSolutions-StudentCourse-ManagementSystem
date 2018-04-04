@@ -75,7 +75,7 @@
     " [ngClass]="{ 'pull-left':this._authService.isAdmin()} ">View Details</a>
 
                         <!-- ADMIN ONLY BUTTON -->
-                        <a (click)="deleteCourse(c._id, c.courseCode) " class="btn btn-outline-danger " *ngIf='this._authService.isAdmin()'>Delete Course</a>
+                        <a (click)="deleteCourse(c._id, c.courseCode) " class="btn btn-outline-danger " *ngIf='isAdmin'>Delete Course</a>
                     </td>
                 </tr>
             </tbody>

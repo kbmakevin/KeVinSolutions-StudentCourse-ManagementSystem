@@ -20,15 +20,6 @@ router.route('/')
     .get((req, res, next) => coursesController.GetCourses(req, res, next))
     .post((req, res, next) => coursesController.CreateCourse(req, res, next));
 
-
-// router.post('/', (req, res, next) => {
-//     coursesController.CreateCourse(req, res, next);
-// });
-
-// router.get('/', (req, res, next) => {
-//     coursesController.GetCourses(req, res, next);
-// });
-
 router.route('/:id')
     .get((req, res, next) => coursesController.GetOneCourse(req, res, next))
     .put((req, res, next) => coursesController.UpdateCourse(req, res, next))
@@ -45,22 +36,5 @@ router.route('/getEnrolled/:studentId')
 // 2018.04.03 - 18:10:49
 router.route('/getNotEnrolledStudents/:courseId')
     .get((req, res, next) => coursesController.GetNotEnrolledStudents(req, res, next));
-
-// router.get('/delete/:code', (req, res, next) => {
-//     coursesController.DeleteCourse(req, res, next);
-// });
-
-// router.get('/:id', (req, res, next) => {
-//     coursesController.GetOneCourse(req, res, next);
-// });
-
-// router.post('/removestudent', (req, res, next) => {
-//     coursesController.RemoveStudentFromCourse(req, res, next);
-// });
-
-// router.post('/updatecourse', (req, res, next) => {
-//     coursesController.UpdateCourse(req, res, next);
-// });
-
 
 module.exports = router;

@@ -60,22 +60,23 @@ module.exports.DeleteCourse = function (req, res, next) {
                     Student.findById(studentId,
                         (err, student) => {
                             console.log(student.studentNumber);
+                            // return res.json(student);
                         });
-                    // Student.findByIdAndUpdate(studentId,
-                    //     { $pull: { courses: courseId } },
-                    //     { new: true },
-                    //     (err, updatedStudent) => {
-                    //         if (err) {
-                    //             console.log('encountered error: ' + err);
-                    //             return res.status(400).send({
-                    //                 message: getErrorMessage(err)
-                    //             });
-                    //         } else {
-                    //             console.log(`Successfully dropped course (${course.courseCode}) from student (#${updatedStudent.studentNumber}) ...`);
-                    //             // res.json(updatedStudent);
-                    //             return res.status(200).json(updatedStudent);
-                    //         }
-                    //     });
+                    Student.findByIdAndUpdate(studentId,
+                        { $pull: { courses: courseId } },
+                        { new: true },
+                        (err, updatedStudent) => {
+                            if (err) {
+                                // console.log('encountered error: ' + err);
+                                return res.status(400).send({
+                                    message: getErrorMessage(err)
+                                });
+                            } else {
+                                console.log(`Successfully dropped course (${course.courseCode}) from student (#${updatedStudent.studentNumber}) ...`);
+                                // res.json(updatedStudent);
+                                // return res.json(updatedStudent);
+                            }
+                        });
                 });
             }
         });
@@ -84,15 +85,16 @@ module.exports.DeleteCourse = function (req, res, next) {
     // Actually, don't need to do this step...since students have been dropped from this course already, no more "relation" can simply delete this course...
 
     // 3. delete THIS course
-    // Course.remove({ _id: courseId }, (err) => {
-    //     if (err) {
-    //         return res.status(400).send({
-    //             message: getErrorMessage(err)
-    //         });
-    //     } else {
-    //         res.status(200).json(courseId);
-    //     }
-    // });
+    Course.remove({ _id: courseId }, (err) => {
+        if (err) {
+            return res.status(400).send({
+                message: getErrorMessage(err)
+            });
+        } else {
+            console.log(`Successfully deleted this course`);
+            return res.status(200).json(courseId);
+        }
+    });
 }
 
 module.exports.GetOneCourse = function (req, res, next) {
@@ -152,6 +154,7 @@ module.exports.GetAvailableCourses = function (req, res, next) {
     );
 }
 
+// 2018.04.04 - 15:03:28
 module.exports.GetNotEnrolledStudents = function (req, res, next) {
     const courseId = req.params.courseId;
 

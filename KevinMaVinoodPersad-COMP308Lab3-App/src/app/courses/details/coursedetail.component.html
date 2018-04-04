@@ -38,8 +38,6 @@
 
     <!-- Display list of students not currently enrolled in this class -->
     <div *ngIf='showNotEnrolledStudents' class="row justify-content-center pb-3">
-        <!-- <div class="col-md-8 border rounded"> -->
-        <!-- {{notEnrolledStudents}} -->
         <div class="card col-md" *ngFor="let student of notEnrolledStudents">
             <div class="card-body">
                 <h5 class="card-title">{{student.firstName}} {{student.lastName}}</h5>
@@ -50,7 +48,6 @@
                     <i class="fa fa-plus-square fa-3x" aria-hidden="true"></i>
                 </a>
             </div>
-            <!-- </div> -->
         </div>
     </div>
 
