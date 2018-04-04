@@ -13,7 +13,6 @@ import { StudentsService } from '../../students/students.service';
 })
 export class ListCoursesComponent implements OnInit {
 
-  // course: Course;
   availableCourses: Course[];
   enrolledCourses: Course[];
   currentStudentId: String;
@@ -27,32 +26,22 @@ export class ListCoursesComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this._coursesService.listCourses()
-    //   .subscribe((course) => {
-    //     this.course = course;
-    //     // console.log(course);
-    //   });
 
     this.currentStudentId = this._authService.getStudent()._id;
 
     // enrolled courses only for student display
     if (!this._authService.isAdmin()) {
-      // this.enrolledCourses = this._authService.getStudent().courses;
       this._studentService.getEnrolledCourses(this.currentStudentId)
         .subscribe(c => {
-          // console.log('inside ng component; courses: ' + c);
           this.enrolledCourses = c;
-          // console.log(`this.enrolledCourses: ${this.enrolledCourses}`);
         },
           error => this._alertService.error(error));
-      // console.log(`this.enrolledCourses: ${this.enrolledCourses}`);
     }
 
     // avail courses received for both student and admin display
     this._studentService.getAvailableCourses(this.currentStudentId)
       .subscribe(c => {
         this.availableCourses = c;
-        // console.log(`this.availableCourses: ${this.availableCourses}`);
       },
         error => this._alertService.error(error));
   }

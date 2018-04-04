@@ -40,18 +40,20 @@ export class CoursesService {
             .catch(this.handleError);
     }
 
-    dropStudent(details: any): Observable<any> {
-        return this._http
-            .post(this._courseBaseURL + '/removestudent', details)
-            .map((res: Response) => res.json())
-            .catch(this.handleError);
-    }
-
     updateCourse(id: String, course: Course): Observable<any> {
         return this._http
             .put(this._courseBaseURL + '/' + id, course)
             //   .post(this._courseBaseURL + '/updatecourse', c)
             .map((res: Response) => res.json())
+            .catch(this.handleError);
+    }
+
+    getNotEnrolledStudents(courseId: String) {
+        return this._http
+            .get(this._courseBaseURL + '/getNotEnrolledStudents/' + courseId)
+            .map(res => {
+                return res.json();
+            })
             .catch(this.handleError);
     }
 

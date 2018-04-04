@@ -1,7 +1,3 @@
-<!-- <div style="padding-top:25px; padding-bottom:45px" >
-    <a [routerLink]="['create']" class="btn btn-success pull-left ">Create Course</a>
-</div> -->
-
 <div style="padding-top:25px; padding-bottom:45px" *ngIf='this._authService.isAdmin()'>
     <a [routerLink]="['create']" class="btn btn-outline-success" [ngClass]="{'pull-left': availableCourses.length}">Create New Course</a>
 </div>
@@ -15,15 +11,13 @@
 
 <div *ngIf='!this._authService.isAdmin()'>
     <h4>Currently Enrolled In:</h4>
-    <!-- <p *ngIf='!this._authService.getStudent().courses.length'> -->
+
     <p *ngIf='!enrolledCourses.length'>
         You are currently enrolled in 0 classes.
         <br>Please feel free to enroll in some of the available courses below by
         <br>clicking the View Details button and then clicking Enroll In This Class on the next page :) !
     </p>
 
-    <!-- authenticated student is enrolled in classes -->
-    <!-- <div style="margin-top:15px" *ngIf="this._authService.getStudent().courses.length"> -->
     <div style="margin-top:15px" *ngIf="enrolledCourses.length">
         <table class="table">
             <thead class="thead-dark">
@@ -37,7 +31,6 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- <tr *ngFor="let c of this._authService.getStudent().courses"> -->
                 <tr *ngFor="let c of enrolledCourses">
                     <th scope="row">{{ c.courseCode }}</th>
                     <td>{{ c.courseName }}</td>
@@ -45,8 +38,7 @@
                     <td>{{ c.semester }}</td>
                     <td>{{ c.students.length }}</td>
                     <td>
-                        <a [routerLink]="['details']" [queryParams]="{id: c._id}" class="btn btn-outline-primary" [ngClass]="{'pull-left':this._authService.isAdmin()}">View Details</a>
-                        <a (click)="delete(c._id, c.courseCode)" class="btn btn-outline-danger" *ngIf='this._authService.isAdmin()'>Delete Course</a>
+                        <a [routerLink]="['details']" [queryParams]="{id: c._id}" class="btn btn-outline-primary">View Details</a>
                     </td>
                 </tr>
             </tbody>
@@ -81,6 +73,8 @@
                     <td>
                         <a [routerLink]="[ 'details'] " [queryParams]="{id: c._id} " class="btn btn-outline-primary
     " [ngClass]="{ 'pull-left':this._authService.isAdmin()} ">View Details</a>
+
+                        <!-- ADMIN ONLY BUTTON -->
                         <a (click)="deleteCourse(c._id, c.courseCode) " class="btn btn-outline-danger " *ngIf='this._authService.isAdmin()'>Delete Course</a>
                     </td>
                 </tr>

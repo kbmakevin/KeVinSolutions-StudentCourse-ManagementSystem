@@ -22,54 +22,64 @@
         </div>
     </div>
     <div class="row justify-content-center" style="margin-bottom: 3vh;">
-        <!-- Student View Buttons -->
-        <!-- enroll -->
-        <div class="col-md" *ngIf='!isAdminView && !isEnrolled'>
-            <a (click)="enrollInCourse()" class="btn btn-outline-success pull-right">Enroll In This Class</a>
-        </div>
-        <!-- drop course if already enrolled -->
-        <div class="col-md" *ngIf='!isAdminView && isEnrolled'>
-            <a (click)="dropCourse()" class="btn btn-outline-danger pull-right">Drop This Class</a>
-        </div>
-
-        <!-- Admin View buttons -->
-        <div class="col-md" *ngIf='isAdminView'>
-            <a [routerLink]="['/courses/update']" [queryParams]="{id: this.courseId} " class="btn btn-outline-warning pull-right">Update Details</a>
-        </div>
-
-        <!-- Common View Buttons -->
         <div class="col-md">
-            <a routerLink='/courses' class="btn btn-outline-info pull-left">Return to List</a>
+            <!-- Student View Buttons -->
+            <!-- enroll -->
+            <a *ngIf='!isAdminView && !isEnrolled' (click)="enrollInCourse()" class="btn btn-outline-success">Enroll In This Class</a>
+            <!-- drop course if already enrolled -->
+            <a *ngIf='!isAdminView && isEnrolled' (click)="dropCourse()" class="btn btn-outline-danger">Drop This Class</a>
+            <!-- Admin View buttons -->
+            <a *ngIf='isAdminView' (click)="getNotEnrolledStudents()" class="btn btn-outline-success">Add Student</a>
+            <a *ngIf='isAdminView' [routerLink]="['/courses/update']" [queryParams]="{id: this.courseId} " class="btn btn-outline-warning">Update Details</a>
+            <!-- Common View Buttons -->
+            <a routerLink='/courses' class="btn btn-outline-info">Return to List</a>
         </div>
     </div>
 
+    <!-- Display list of students not currently enrolled in this class -->
+    <div *ngIf='showNotEnrolledStudents' class="row justify-content-center pb-3">
+        <!-- <div class="col-md-8 border rounded"> -->
+        <!-- {{notEnrolledStudents}} -->
+        <div class="card col-md" *ngFor="let student of notEnrolledStudents">
+            <div class="card-body">
+                <h5 class="card-title">{{student.firstName}} {{student.lastName}}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Student #: {{student.studentNumber}}</h6>
+                <p class="card-text">
+                    <b>Program</b>: {{student.program}}</p>
+                <a class="card-link text-success" (click)="enrollInCourse(student._id, student.studentNumber)">
+                    <i class="fa fa-plus-square fa-3x" aria-hidden="true"></i>
+                </a>
+            </div>
+            <!-- </div> -->
+        </div>
+    </div>
 
-    <div *ngIf="hasStudents;else noStudents" class="row justify-content-center" style="margin-top:15px">
-        <div class="col-md-9">
+    <div *ngIf="hasStudents;else noStudents " class="row justify-content-center ">
+        <div class="col-md-9 ">
             <h4>Enrolled Students ({{ course?.students.length }})</h4>
             <hr />
-            <table class="table">
-                <thead class="thead-light">
+            <table class="table ">
+                <thead class="thead-light ">
                     <tr>
-                        <th scope="col">Student #</th>
-                        <th scope="col">First Name</th>
-                        <th scope="col">Last Name</th>
-                        <th scope="col">Program</th>
-                        <th scope="col"></th>
+                        <th scope="col ">Student #</th>
+                        <th scope="col ">First Name</th>
+                        <th scope="col ">Last Name</th>
+                        <th scope="col ">Program</th>
+                        <th scope="col "></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let s of course['students']">
-                        <th scope="row">{{ s.studentNumber }}</th>
+                    <tr *ngFor="let s of course[ 'students'] ">
+                        <th scope="row ">{{ s.studentNumber }}</th>
                         <td>{{ s.firstName }}</td>
                         <td>{{ s.lastName }}</td>
                         <td>{{ s.program }}</td>
                         <td>
                             <!-- STUDENT BUTTON -->
-                            <a [routerLink]="['details']" [queryParams]="{id: s._id}" class="btn btn-outline-primary" *ngIf='!isAdminView'>View Profile</a>
+                            <a [routerLink]="[ 'details'] " [queryParams]="{id: s._id} " class="btn btn-outline-primary " *ngIf='!isAdminView'>View Profile</a>
 
                             <!-- ADMIN BUTTON -->
-                            <a *ngIf='isAdminView' (click)="dropStudent(s._id, s.studentNumber)" class="btn btn-outline-danger">Drop Student</a>
+                            <a *ngIf='isAdminView' (click)="dropStudent(s._id, s.studentNumber) " class="btn btn-outline-danger ">Drop Student</a>
                         </td>
                     </tr>
                 </tbody>
@@ -77,9 +87,9 @@
         </div>
     </div>
 
-    <div class="row justify-content-center">
+    <div class="row justify-content-center ">
         <ng-template #noStudents>
-            <div class="col-md-8 offset-md-2">
+            <div class="col-md-8 offset-md-2 ">
                 <h4>Enrolled Students</h4>
                 <hr>
                 <p>

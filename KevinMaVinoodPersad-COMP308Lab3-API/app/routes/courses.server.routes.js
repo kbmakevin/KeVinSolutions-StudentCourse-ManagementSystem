@@ -42,6 +42,10 @@ router.route('/getAvailable/:studentId')
 router.route('/getEnrolled/:studentId')
     .get((req, res, next) => coursesController.GetEnrolledCourses(req, res, next));
 
+// 2018.04.03 - 18:10:49
+router.route('/getNotEnrolledStudents/:courseId')
+    .get((req, res, next) => coursesController.GetNotEnrolledStudents(req, res, next));
+
 // router.get('/delete/:code', (req, res, next) => {
 //     coursesController.DeleteCourse(req, res, next);
 // });

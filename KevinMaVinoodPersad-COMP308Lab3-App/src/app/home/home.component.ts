@@ -16,8 +16,6 @@ export class HomeComponent implements OnInit {
   constructor(
     private _router: Router,
     private _authService: AuthenticationService) {
-    // 2018.03.28 - 19:54:04 - even tho we receive from API as JSON obj, need to parse again because sessionStorage stores data as strings
-    this.currentUser = JSON.parse(sessionStorage.getItem('currentStudent'));
   }
 
   ngOnInit() {
