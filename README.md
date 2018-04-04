@@ -12,3 +12,7 @@ This application is currently configured to use the comp308-w2018 db on the loca
 5. Type 'npm start' and hit enter inside your terminal
 6. Open a browser and navigate to the url: http://localhost:4200
 7. Enjoy :) !
+
+Note: Initially an administrator account will be created with credentials (1:password)
+
+You will need to create your own students and courses to test the app
